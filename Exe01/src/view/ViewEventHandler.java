@@ -5,9 +5,9 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-public class ViewHandler  implements MouseListener, KeyListener{
+public class ViewEventHandler  implements MouseListener, KeyListener{
 
-	public ViewHandler() {
+	public ViewEventHandler() {
 		
 	}
 	
