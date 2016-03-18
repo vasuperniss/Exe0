@@ -1,5 +1,6 @@
 package model;
 
+import java.awt.Graphics;
 import java.awt.Point;
 
 public class IndexedEdge implements Edge {
@@ -24,5 +25,11 @@ public class IndexedEdge implements Edge {
 	
 	public String getSaveString() {
 		return startId + " " + endId;
+	}
+
+	@Override
+	public void draw(Graphics g) {
+		g.drawLine(this.start.x, this.start.y,
+				this.end.x, this.end.y);
 	}
 }

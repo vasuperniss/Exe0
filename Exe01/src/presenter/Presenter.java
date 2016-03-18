@@ -1,33 +1,37 @@
 package presenter;
 
+import java.awt.Graphics;
+
 import model.IModel;
-import view.IView;
 
 public class Presenter implements IPresenterModel, IPresenterView {
 	
 	private enum State {Drawing, Stale, Fill};
 
+	private IModel model;
 	private State state;
 
-	public Presenter() {
-		
+	public Presenter(IModel model) {
+		this.model = model;
 	}
 
 	@Override
 	public void savePressed() {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void mouseClickedAt(int x, int y) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void mouseMovedTo(int x, int y) {
-		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void draw(Graphics g) {
 		
 	}
 }
