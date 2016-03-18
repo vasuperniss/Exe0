@@ -6,14 +6,28 @@ import view.IView;
 public class Presenter implements IPresenterModel, IPresenterView {
 	
 	private enum State {Drawing, Stale, Fill};
-	
-	private IView view;
-	private IModel model;
 
 	private State state;
 
-	public Presenter(IView view, IModel model) {
-		this.view = view;
-		this.model = model;
+	public Presenter() {
+		
+	}
+
+	@Override
+	public void savePressed() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseClickedAt(int x, int y) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseMovedTo(int x, int y) {
+		// TODO Auto-generated method stub
+		
 	}
 }

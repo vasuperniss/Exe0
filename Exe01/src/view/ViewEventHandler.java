@@ -6,26 +6,36 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
+import presenter.IPresenterView;
+
 public class ViewEventHandler implements MouseListener, MouseMotionListener,
 		KeyListener {
 
-	public ViewEventHandler() {
+	private IPresenterView presenter;
 
+	public ViewEventHandler(IPresenterView presenter) {
+		this.presenter = presenter;
 	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		
+		if (e.getKeyCode() == KeyEvent.VK_S) {
+			presenter.savePressed();
+		} else if (e.getKeyCode() == KeyEvent.VK_P) {
+			
+		} else {
+			// do nothing
+		}
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		
+		presenter.mouseClickedAt(e.getX(), e.getY());
 	}
 
 	@Override
-	public void mouseMoved(MouseEvent arg0) {
-		
+	public void mouseMoved(MouseEvent e) {
+		presenter.mouseMovedTo(e.getX(), e.getY());
 	}
 
 	@Override

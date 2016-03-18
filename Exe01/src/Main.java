@@ -1,3 +1,4 @@
+import presenter.Presenter;
 import view.Canvas2D;
 import view.CloseableFrame;
 import view.ViewEventHandler;
@@ -10,7 +11,9 @@ public class Main {
 		Canvas2D canvas = new Canvas2D();
 		canvas.setSize(WIDTH, HEIGHT);
 		
-		ViewEventHandler viewHandler = new ViewEventHandler();
+		Presenter presenter = new Presenter();
+		
+		ViewEventHandler viewHandler = new ViewEventHandler(presenter);
 		canvas.addMouseListener(viewHandler);
 		canvas.addKeyListener(viewHandler);
 		

@@ -2,7 +2,7 @@ package model;
 
 import java.awt.Point;
 
-public class IndexedEdge {
+public class IndexedEdge implements Edge {
 
 	private int startId, endId;
 	private Point start, end;
