@@ -21,8 +21,8 @@ public class ViewEventHandler implements MouseListener, MouseMotionListener,
 	public void keyTyped(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_S) {
 			presenter.savePressed();
-		} else if (e.getKeyCode() == KeyEvent.VK_P) {
-			
+		} else if (e.getKeyCode() == KeyEvent.VK_F) {
+			presenter.fillPressed();
 		} else {
 			// do nothing
 		}

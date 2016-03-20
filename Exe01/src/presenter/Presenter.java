@@ -19,6 +19,11 @@ public class Presenter implements IPresenterModel, IPresenterView {
 	public void savePressed() {
 		
 	}
+	
+	@Override
+	public void fillPressed() {
+		
+	}
 
 	@Override
 	public void mouseClickedAt(int x, int y) {
