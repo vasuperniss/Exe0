@@ -10,6 +10,7 @@ public class Main {
 	public static void main(String[] args) {
 		// View Creation
 		CloseableFrame frame = new CloseableFrame();
+		frame.setTitle("Polygon Drawing - Exe0");
 		
 		// Model Creation
 		Scene scene = new Scene();
@@ -23,6 +24,7 @@ public class Main {
 		ViewEventHandler viewHandler = new ViewEventHandler(canvas, presenter);
 		canvas.addMouseListener(viewHandler);
 		canvas.addKeyListener(viewHandler);
+		canvas.addMouseMotionListener(viewHandler);
 		
 		frame.add(canvas);
 		frame.pack();

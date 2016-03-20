@@ -61,7 +61,7 @@ public class ViewEventHandler implements MouseListener, MouseMotionListener,
 	}
 
 	@Override
-	public void mouseDragged(MouseEvent arg0) {
+	public void mouseDragged(MouseEvent e) {
 		// do nothing
 	}
 	
