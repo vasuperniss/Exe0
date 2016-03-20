@@ -8,12 +8,14 @@ import java.util.ArrayList;
 public class Scene implements IModel {
 	
 	private ArrayList<Point> vertices;
-	private ArrayList<IndexedEdge> edges;
+	private ArrayList<Edge> edges;
+	private ScanConversionDrawer filler;
 	private boolean isFilled;
 	
 	public Scene() {
 		this.vertices = new ArrayList<Point>();
-		this.edges = new ArrayList<IndexedEdge>();
+		this.edges = new ArrayList<Edge>();
+		this.filler = new ScanConversionDrawer();
 		this.isFilled = false;
 	}
 
@@ -24,7 +26,7 @@ public class Scene implements IModel {
 			edge.draw(g);
 		}
 		if (isFilled) {
-			
+			this.filler.fillDrawingUsingEdges(g, this.edges);
 		}
 	}
 	

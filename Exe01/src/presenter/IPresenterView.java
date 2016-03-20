@@ -2,15 +2,17 @@ package presenter;
 
 import java.awt.Graphics;
 
+import view.IView;
+
 public interface IPresenterView {
 
-	void savePressed();
+	void savePressed(IView view);
 	
-	void fillPressed();
+	void fillPressed(IView view);
 
-	void mouseClickedAt(int x, int y);
+	void mouseClickedAt(IView view, int x, int y);
 
-	void mouseMovedTo(int x, int y);
+	void mouseMovedTo(IView view, int x, int y);
 
 	void draw(Graphics g);
 }

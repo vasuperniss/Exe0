@@ -12,17 +12,19 @@ public class ViewEventHandler implements MouseListener, MouseMotionListener,
 		KeyListener {
 
 	private IPresenterView presenter;
+	private IView view;
 
-	public ViewEventHandler(IPresenterView presenter) {
+	public ViewEventHandler(IView view, IPresenterView presenter) {
 		this.presenter = presenter;
+		this.view = view;
 	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_S) {
-			presenter.savePressed();
+			presenter.savePressed(this.view);
 		} else if (e.getKeyCode() == KeyEvent.VK_F) {
-			presenter.fillPressed();
+			presenter.fillPressed(this.view);
 		} else {
 			// do nothing
 		}
@@ -30,12 +32,12 @@ public class ViewEventHandler implements MouseListener, MouseMotionListener,
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		presenter.mouseClickedAt(e.getX(), e.getY());
+		presenter.mouseClickedAt(this.view, e.getX(), e.getY());
 	}
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		presenter.mouseMovedTo(e.getX(), e.getY());
+		presenter.mouseMovedTo(this.view, e.getX(), e.getY());
 	}
 
 	@Override

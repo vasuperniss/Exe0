@@ -10,8 +10,6 @@ public class Main {
 	public static void main(String[] args) {
 		// View Creation
 		CloseableFrame frame = new CloseableFrame();
-		Canvas2D canvas = new Canvas2D();
-		canvas.setSize(WIDTH, HEIGHT);
 		
 		// Model Creation
 		Scene scene = new Scene();
@@ -20,7 +18,9 @@ public class Main {
 		Presenter presenter = new Presenter(scene);
 		
 		// View Creation continued
-		ViewEventHandler viewHandler = new ViewEventHandler(presenter);
+		Canvas2D canvas = new Canvas2D(presenter);
+		canvas.setSize(WIDTH, HEIGHT);
+		ViewEventHandler viewHandler = new ViewEventHandler(canvas, presenter);
 		canvas.addMouseListener(viewHandler);
 		canvas.addKeyListener(viewHandler);
 		
