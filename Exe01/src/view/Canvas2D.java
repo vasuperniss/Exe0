@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.Canvas;
+import java.awt.Frame;
 import java.awt.Graphics;
 
 import presenter.IPresenterView;
@@ -39,5 +40,10 @@ public class Canvas2D extends Canvas implements IView {
 	@Override
 	public void reDraw() {
 		this.repaint();
+	}
+
+	@Override
+	public Frame getFrame() {
+		return (Frame)this.getParent();
 	}
 }

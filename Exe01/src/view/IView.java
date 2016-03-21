@@ -1,5 +1,7 @@
 package view;
 
+import java.awt.Frame;
+
 /**
  * The Interface IView.
  */
@@ -10,4 +12,6 @@ public interface IView {
 	 * of changes made.
 	 */
 	public void reDraw();
+
+	public Frame getFrame();
 }

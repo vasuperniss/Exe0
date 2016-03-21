@@ -1,6 +1,7 @@
 package presenter;
 
 import java.awt.Color;
+import java.awt.FileDialog;
 import java.awt.Graphics;
 import java.awt.Point;
 
@@ -60,18 +61,6 @@ public class Presenter implements IPresenterView {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see presenter.IPresenterView#savePressed(view.IView)
-	 */
-	@Override
-	public void savePressed(IView view) {
-		if (this.state != State.Drawing) {
-
-		}
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
 	 * @see presenter.IPresenterView#fillPressed(view.IView)
 	 */
 	@Override
@@ -81,7 +70,6 @@ public class Presenter implements IPresenterView {
 
 		} else if (this.state == State.Stale) {
 			this.state = State.Fill;
-
 		}
 		view.reDraw();
 	}
@@ -144,6 +132,48 @@ public class Presenter implements IPresenterView {
 			g.setColor(Color.PINK);
 			g.drawLine(this.tempVertex.x, this.tempVertex.y,
 					this.futureVertex.x, this.futureVertex.y);
+		}
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see presenter.IPresenterView#savePressed(view.IView)
+	 */
+	@Override
+	public void savePressed(IView view) {
+		if (this.state != State.Drawing) {
+			FileDialog saveDialog = new FileDialog(view.getFrame(),
+					"Choose a file to save to", FileDialog.SAVE);
+			saveDialog.setFile("*.sci");
+			saveDialog.setVisible(true);
+			String filename = saveDialog.getFile();
+			if (filename == null || !filename.endsWith(".sci") ||
+							filename.length() <= 4) {
+				// do nothing
+			} else {
+				//TODO:: save the file to [filename]
+			}
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see presenter.IPresenterView#savePressed(view.IView)
+	 */
+	@Override
+	public void loadPressed(IView view) {
+		FileDialog loadDialog = new FileDialog(view.getFrame(),
+				"Choose a file to load from", FileDialog.LOAD);
+		loadDialog.setFile("*.sci");
+		loadDialog.setVisible(true);
+		String filename = loadDialog.getFile();
+		if (filename == null || !filename.endsWith(".sci") ||
+						filename.length() <= 4) {
+			// do nothing
+		} else {
+			//TODO:: load the file from [filename]
 		}
 	}
 }

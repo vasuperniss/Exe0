@@ -47,4 +47,11 @@ public interface IPresenterView {
 	 * @param g the Graphics Object to draw on
 	 */
 	void drawOn(Graphics g);
+
+	/**
+	 * Load pressed.
+	 *
+	 * @param view the view of the pressed button
+	 */
+	void loadPressed(IView view);
 }
