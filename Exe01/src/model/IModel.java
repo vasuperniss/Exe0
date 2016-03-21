@@ -4,6 +4,8 @@ import java.awt.Graphics;
 
 /**
  * The Interface IModel.
+ * @author Michael Vassernis 319582888
+ * @author 
  */
 public interface IModel {
 

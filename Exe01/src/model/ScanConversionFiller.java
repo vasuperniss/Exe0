@@ -5,6 +5,8 @@ import java.util.List;
 
 /**
  * The Class ScanConversionFiller.
+ * @author Michael Vassernis 319582888
+ * @author 
  */
 public class ScanConversionFiller implements IPolygonFiller {
 

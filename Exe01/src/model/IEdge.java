@@ -5,6 +5,8 @@ import java.awt.Point;
 
 /**
  * The Interface IEdge.
+ * @author Michael Vassernis 319582888
+ * @author 
  */
 public interface IEdge {
 

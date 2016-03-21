@@ -6,6 +6,8 @@ import view.IView;
 
 /**
  * The Interface IPresenterView.
+ * @author Michael Vassernis 319582888
+ * @author 
  */
 public interface IPresenterView {
 

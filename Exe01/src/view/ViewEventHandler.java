@@ -10,6 +10,8 @@ import presenter.IPresenterView;
 
 /**
  * The Class ViewEventHandler.
+ * @author Michael Vassernis 319582888
+ * @author 
  */
 public class ViewEventHandler implements MouseListener, MouseMotionListener,
 		KeyListener {

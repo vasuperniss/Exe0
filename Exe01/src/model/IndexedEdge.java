@@ -6,6 +6,8 @@ import java.awt.Point;
 // TODO: Auto-generated Javadoc
 /**
  * The Class IndexedEdge.
+ * @author Michael Vassernis 319582888
+ * @author 
  */
 public class IndexedEdge implements IEdge {
 

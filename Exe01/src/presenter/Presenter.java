@@ -10,6 +10,8 @@ import model.IModel;
 
 /**
  * The Class Presenter.
+ * @author Michael Vassernis 319582888
+ * @author 
  */
 public class Presenter implements IPresenterView {
 

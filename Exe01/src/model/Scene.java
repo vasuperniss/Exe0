@@ -8,7 +8,8 @@ import java.util.ArrayList;
 /**
  * The Class Scene.
  *
- * @author user
+ * @author Michael Vassernis 319582888
+ * @author 
  */
 public class Scene implements IModel {
 	

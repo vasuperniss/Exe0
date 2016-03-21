@@ -6,6 +6,8 @@ import java.awt.event.WindowEvent;
 
 /**
  * The Class CloseableFrame.
+ * @author Michael Vassernis 319582888
+ * @author 
  */
 public class CloseableFrame extends Frame {
 

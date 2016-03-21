@@ -5,6 +5,8 @@ import java.util.List;
 
 /**
  * The Interface IPolygonFiller.
+ * @author Michael Vassernis 319582888
+ * @author 
  */
 public interface IPolygonFiller {
 
