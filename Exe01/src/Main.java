@@ -4,9 +4,19 @@ import view.Canvas2D;
 import view.CloseableFrame;
 import view.ViewEventHandler;
 
+/**
+ * The Class Main.
+ */
 public class Main {
+	
+	/** The Constant HEIGHT, WIDTH. */
 	private static final int WIDTH = 700, HEIGHT = 450;
 	
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		// View Creation
 		CloseableFrame frame = new CloseableFrame();
@@ -26,6 +36,7 @@ public class Main {
 		canvas.addKeyListener(viewHandler);
 		canvas.addMouseMotionListener(viewHandler);
 		
+		// start up the Frame
 		frame.add(canvas);
 		frame.pack();
 		frame.setVisible(true);
