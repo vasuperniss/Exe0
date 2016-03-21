@@ -42,7 +42,7 @@ public class ViewEventHandler implements MouseListener, MouseMotionListener,
 			presenter.savePressed(this.view);
 		} else if (String.valueOf(e.getKeyChar()).equalsIgnoreCase("F")) {
 			presenter.fillPressed(this.view);
-		} else if (String.valueOf(e.getKeyChar()).equalsIgnoreCase("F")) {
+		} else if (String.valueOf(e.getKeyChar()).equalsIgnoreCase("L")) {
 			presenter.loadPressed(this.view);
 		}else {
 			// do nothing

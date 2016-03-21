@@ -69,9 +69,10 @@ public class Presenter implements IPresenterView {
 	public void fillPressed(IView view) {
 		if (this.state == State.Fill) {
 			this.state = State.Stale;
-
+			this.model.setFilled(false);
 		} else if (this.state == State.Stale) {
 			this.state = State.Fill;
+			this.model.setFilled(true);
 		}
 		view.reDraw();
 	}
@@ -89,6 +90,7 @@ public class Presenter implements IPresenterView {
 			this.startVertex = new Point(x, y);
 			this.tempVertex = new Point(x, y);
 			this.futureVertex = new Point(x, y);
+			view.reDraw();
 		} else if (this.state == State.Drawing) {
 			if (startVertex.distance(x, y) <= 5 && this.vertexCounter >= 3) {
 				this.model.addTempEdgesToScene();
@@ -100,8 +102,8 @@ public class Presenter implements IPresenterView {
 				this.tempVertex = new Point(x, y);
 				this.futureVertex = new Point(x, y);
 			}
+			view.reDraw();
 		}
-		view.reDraw();
 	}
 
 	/*
