@@ -2,7 +2,6 @@ package model;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Point;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -17,7 +16,7 @@ import java.util.ArrayList;
 public class Scene implements IModel {
 	
 	/** The vertices of the Scene. */
-	private ArrayList<Point> vertices;
+	private ArrayList<Vertex> vertices;
 	
 	/** The main edges of the Scene. */
 	private ArrayList<IEdge> edges;
@@ -35,7 +34,7 @@ public class Scene implements IModel {
 	 * Instantiates a new scene.
 	 */
 	public Scene() {
-		this.vertices = new ArrayList<Point>();
+		this.vertices = new ArrayList<Vertex>();
 		this.edges = new ArrayList<IEdge>();
 		this.tempEdges = new ArrayList<IEdge>();
 		this.filler = new ScanConversionFiller();
@@ -74,8 +73,8 @@ public class Scene implements IModel {
 	 */
 	@Override
 	public void addTempEdge(int x1, int y1, int x2, int y2) {
-		this.tempEdges.add(new IndexedEdge(new Point(x1, y1),
-				new Point(x2, y2), 0, 0));
+		this.tempEdges.add(new IndexedEdge(new Vertex(x1, y1),
+				new Vertex(x2, y2), 0, 0));
 	}
 
 	/* (non-Javadoc)
@@ -84,15 +83,17 @@ public class Scene implements IModel {
 	@Override
 	public void addTempEdgesToScene() {
 		for (IEdge e : this.tempEdges) {
-			this.vertices.add(new Point(e.getStart().x, e.getStart().y));
+			this.vertices.add(new Vertex(e.getStart().x, e.getStart().y));
 			this.edges.add(new IndexedEdge(e.getStart(), e.getEnd(),
 					this.vertices.size() - 1, this.vertices.size()));
 		}
+		// add the final edge (the edge that uses the first and final vertex
 		this.vertices.add(this.tempEdges.get(this.tempEdges.size() - 1).getEnd());
 		this.edges.add(new IndexedEdge(
 				this.tempEdges.get(this.tempEdges.size() - 1).getEnd(),
 				this.tempEdges.get(0).getStart(), this.vertices.size() - 1, 
 				this.vertices.size() - 1 - this.tempEdges.size()));
+		// clear the temporary list
 		this.tempEdges.clear();
 	}
 
@@ -104,7 +105,7 @@ public class Scene implements IModel {
 		// write the number of vertices
 		writer.println(this.vertices.size());
 		// write all Vertices
-		for (Point v : this.vertices) {
+		for (Vertex v : this.vertices) {
 			writer.println(v.x + " " + v.y);
 		}
 		
@@ -124,11 +125,11 @@ public class Scene implements IModel {
 		// read the number of vertices
 		int numVertices = Integer.parseInt(reader.readLine());
 		// read all vertices
-		ArrayList<Point> loadedVertices = new ArrayList<Point>();
+		ArrayList<Vertex> loadedVertices = new ArrayList<Vertex>();
 		for (int i = 0; i < numVertices; i++) {
 			String[] vertexStr = reader.readLine().split(" ");
-			loadedVertices.add(new Point(Integer.parseInt(vertexStr[0]),
-										Integer.parseInt(vertexStr[1])));
+			loadedVertices.add(new Vertex(Float.parseFloat(vertexStr[0]),
+					Float.parseFloat(vertexStr[1])));
 		}
 		
 		// read the number of edges

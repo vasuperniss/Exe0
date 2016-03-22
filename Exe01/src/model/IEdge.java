@@ -1,7 +1,6 @@
 package model;
 
 import java.awt.Graphics;
-import java.awt.Point;
 
 /**
  * The Interface IEdge.
@@ -15,14 +14,14 @@ public interface IEdge {
 	 *
 	 * @return the start Vertex
 	 */
-	public Point getStart();
+	public Vertex getStart();
 	
 	/**
 	 * Gets the end Vertex of the Edge.
 	 *
 	 * @return the end Vertex
 	 */
-	public Point getEnd();
+	public Vertex getEnd();
 
 	/**
 	 * Draws the Edge on g.
@@ -30,4 +29,11 @@ public interface IEdge {
 	 * @param g the Graphics object to draw on
 	 */
 	public void draw(Graphics g);
+	
+	/**
+	 * Gets the slope of the edge.
+	 *
+	 * @return the slope
+	 */
+	public float getSlope();
 }

@@ -92,6 +92,7 @@ public class Presenter implements IPresenterView {
 	public void mouseClickedAt(IView view, int x, int y) {
 		if (this.state == State.Stale) {
 			this.state = State.Drawing;
+			// set up the first vertex
 			this.vertexCounter = 1;
 			this.startVertex = new Point(x, y);
 			this.tempVertex = new Point(x, y);
@@ -99,11 +100,13 @@ public class Presenter implements IPresenterView {
 			view.reDraw();
 		} else if (this.state == State.Drawing) {
 			if (startVertex.distance(x, y) <= 5 && this.vertexCounter >= 3) {
+				// user wants to close the polygon
 				this.model.addTempEdgesToScene();
 				this.state = State.Stale;
 			} else {
-				this.model.addTempEdge(this.tempVertex.x, this.tempVertex.y, x,
-						y);
+				// not closing the polygon, -> adding another vertex
+				this.model.addTempEdge(this.tempVertex.x, this.tempVertex.y,
+						x, y);
 				this.vertexCounter++;
 				this.tempVertex = new Point(x, y);
 				this.futureVertex = new Point(x, y);
@@ -121,6 +124,7 @@ public class Presenter implements IPresenterView {
 	public void mouseMovedTo(IView view, int x, int y) {
 		if (this.state == State.Drawing) {
 			if (startVertex.distance(x, y) <= 5 && this.vertexCounter >= 3) {
+				// mouse is 5 pixels away from the starting vertex
 				this.futureVertex = this.startVertex;
 			} else {
 				this.futureVertex = new Point(x, y);
@@ -139,6 +143,7 @@ public class Presenter implements IPresenterView {
 		this.model.draw(g);
 		if (this.state == State.Drawing && this.tempVertex != null
 				&& this.futureVertex != null) {
+			// draw the future edge to be added
 			g.setColor(Color.PINK);
 			g.drawLine(this.tempVertex.x, this.tempVertex.y,
 					this.futureVertex.x, this.futureVertex.y);
@@ -200,7 +205,7 @@ public class Presenter implements IPresenterView {
 				this.state = State.Stale;
 				view.reDraw();
 			} catch (Exception e) {
-				// faild - do nothing
+				// failed - do nothing
 			}
 		}
 	}

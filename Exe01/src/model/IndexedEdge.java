@@ -1,9 +1,7 @@
 package model;
 
 import java.awt.Graphics;
-import java.awt.Point;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class IndexedEdge.
  * @author Michael Vassernis 319582888
@@ -15,7 +13,10 @@ public class IndexedEdge implements IEdge {
 	private int startId, endId;
 	
 	/** The start and end Vertices. */
-	private Point start, end;
+	private Vertex start, end;
+
+	/** The slope. */
+	private float slope;
 	
 	/**
 	 * Instantiates a new indexed edge.
@@ -25,24 +26,26 @@ public class IndexedEdge implements IEdge {
 	 * @param sId the array id of the start vertex
 	 * @param eId the array id of the end vertex
 	 */
-	public IndexedEdge(Point start, Point end, int sId, int eId) {
+	public IndexedEdge(Vertex start, Vertex end, int sId, int eId) {
 		this.start = start;
 		this.end = end;
 		this.startId = sId;
 		this.endId = eId;
+		this.slope =  (this.end.y - this.start.y)
+				/ (this.end.x - this.start.x);
 	}
 	
 	/* (non-Javadoc)
 	 * @see model.IEdge#getStart()
 	 */
-	public Point getStart() {
+	public Vertex getStart() {
 		return this.start;
 	}
 	
 	/* (non-Javadoc)
 	 * @see model.IEdge#getEnd()
 	 */
-	public Point getEnd() {
+	public Vertex getEnd() {
 		return this.end;
 	}
 	
@@ -60,7 +63,15 @@ public class IndexedEdge implements IEdge {
 	 */
 	@Override
 	public void draw(Graphics g) {
-		g.drawLine(this.start.x, this.start.y,
-				this.end.x, this.end.y);
+		g.drawLine((int)this.start.x, (int)this.start.y,
+				(int)this.end.x, (int)this.end.y);
+	}
+
+	/* (non-Javadoc)
+	 * @see model.IEdge#getSlope()
+	 */
+	@Override
+	public float getSlope() {
+		return this.slope;
 	}
 }
