@@ -1,11 +1,14 @@
 package model;
 
 import java.awt.Graphics;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  * The Interface IModel.
  * @author Michael Vassernis 319582888
- * @author 
+ * @author Eran Haberman 201508793
  */
 public interface IModel {
 
@@ -38,4 +41,20 @@ public interface IModel {
 	 * Adds the temporary edges to the main Edges of the scene.
 	 */
 	public void addTempEdgesToScene();
+	
+	/**
+	 * Write data to writer.
+	 *
+	 * @param writer the PrintWriter object
+	 */
+	public void writeDataTo(PrintWriter writer);
+	
+	/**
+	 * Load data from reader.
+	 *
+	 * @param reader the BufferedReader object
+	 * @throws NumberFormatException the number format exception
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	public void loadDataFrom(BufferedReader reader) throws NumberFormatException, IOException;
 }

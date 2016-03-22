@@ -8,7 +8,7 @@ import view.ViewEventHandler;
  * The Class Main.
  * 
  * @author Michael Vassernis 319582888
- * @author 
+ * @author Eran Haberman 201508793
  */
 public class Main {
 	

@@ -7,7 +7,7 @@ import java.awt.Point;
 /**
  * The Class IndexedEdge.
  * @author Michael Vassernis 319582888
- * @author 
+ * @author Eran Haberman 201508793
  */
 public class IndexedEdge implements IEdge {
 

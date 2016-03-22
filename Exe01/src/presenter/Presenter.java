@@ -4,6 +4,12 @@ import java.awt.Color;
 import java.awt.FileDialog;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 
 import view.IView;
 import model.IModel;
@@ -11,7 +17,7 @@ import model.IModel;
 /**
  * The Class Presenter.
  * @author Michael Vassernis 319582888
- * @author 
+ * @author Eran Haberman 201508793
  */
 public class Presenter implements IPresenterView {
 
@@ -151,12 +157,20 @@ public class Presenter implements IPresenterView {
 					"Choose a file to save to", FileDialog.SAVE);
 			saveDialog.setFile("*.sci");
 			saveDialog.setVisible(true);
-			String filename = saveDialog.getFile();
-			if (filename == null || !filename.endsWith(".sci") ||
-							filename.length() <= 4) {
+			String filepath = saveDialog.getDirectory() + saveDialog.getFile();
+			if (filepath == null || !filepath.endsWith(".sci") ||
+									filepath.length() <= 4) {
 				// do nothing
 			} else {
-				//TODO:: save the file to [filename]
+				PrintWriter writer = null;
+				try {
+					writer = new PrintWriter(new OutputStreamWriter(
+							 				 new FileOutputStream(filepath)));
+					this.model.writeDataTo(writer);
+					writer.close();
+				} catch (Exception e) {
+					// failed - do nothing
+				}
 			}
 		}
 	}
@@ -172,12 +186,22 @@ public class Presenter implements IPresenterView {
 				"Choose a file to load from", FileDialog.LOAD);
 		loadDialog.setFile("*.sci");
 		loadDialog.setVisible(true);
-		String filename = loadDialog.getFile();
-		if (filename == null || !filename.endsWith(".sci") ||
-						filename.length() <= 4) {
+		String filepath = loadDialog.getDirectory() + loadDialog.getFile();
+		if (filepath == null || !filepath.endsWith(".sci") ||
+						filepath.length() <= 4) {
 			// do nothing
 		} else {
-			//TODO:: load the file from [filename]
+			BufferedReader reader = null;
+			try {
+				reader = new BufferedReader(new InputStreamReader(
+						new FileInputStream(filepath)));
+				this.model.loadDataFrom(reader);
+				reader.close();
+				this.state = State.Stale;
+				view.reDraw();
+			} catch (Exception e) {
+				// faild - do nothing
+			}
 		}
 	}
 }

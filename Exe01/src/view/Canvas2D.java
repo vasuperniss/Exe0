@@ -9,7 +9,7 @@ import presenter.IPresenterView;
 /**
  * The Class Canvas2D.
  * @author Michael Vassernis 319582888
- * @author 
+ * @author Eran Haberman 201508793
  */
 public class Canvas2D extends Canvas implements IView {
 

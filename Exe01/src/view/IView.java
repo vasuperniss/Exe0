@@ -5,7 +5,7 @@ import java.awt.Frame;
 /**
  * The Interface IView.
  * @author Michael Vassernis 319582888
- * @author 
+ * @author Eran Haberman 201508793
  */
 public interface IView {
 	

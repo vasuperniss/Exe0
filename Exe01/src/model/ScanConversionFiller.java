@@ -9,7 +9,7 @@ import java.util.List;
  * The Class ScanConversionFiller.
  * 
  * @author Michael Vassernis 319582888
- * @author
+ * @author Eran Haberman 201508793
  */
 public class ScanConversionFiller implements IPolygonFiller {
 
@@ -56,12 +56,9 @@ public class ScanConversionFiller implements IPolygonFiller {
 			
 			I.sort(new IntegerComparetor());
 			for (int i = 0; i + 1 < I.size(); i+=2) {
-				int x1 = I.get(i);
-				int x2 = I.get(i + 1);
 				g.drawLine(I.get(i), k, I.get(i + 1), k);
 			}
 		}
-		int a = 5;
 	}
 
 	private int yMin(IEdge e) {
@@ -79,7 +76,6 @@ public class ScanConversionFiller implements IPolygonFiller {
 			return Math.min(e1.getStart().y, e1.getEnd().y)
 					- Math.min(e2.getStart().y, e2.getEnd().y);
 		}
-
 	}
 	
 	private class IntegerComparetor implements Comparator<Integer> {
