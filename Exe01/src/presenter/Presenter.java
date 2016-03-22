@@ -155,10 +155,10 @@ public class Presenter implements IPresenterView {
 		if (this.state != State.Drawing) {
 			FileDialog saveDialog = new FileDialog(view.getFrame(),
 					"Choose a file to save to", FileDialog.SAVE);
-			saveDialog.setFile("*.sci");
+			saveDialog.setFile("*.scn");
 			saveDialog.setVisible(true);
 			String filepath = saveDialog.getDirectory() + saveDialog.getFile();
-			if (filepath == null || !filepath.endsWith(".sci") ||
+			if (filepath == null || !filepath.endsWith(".scn") ||
 									filepath.length() <= 4) {
 				// do nothing
 			} else {
@@ -184,10 +184,10 @@ public class Presenter implements IPresenterView {
 	public void loadPressed(IView view) {
 		FileDialog loadDialog = new FileDialog(view.getFrame(),
 				"Choose a file to load from", FileDialog.LOAD);
-		loadDialog.setFile("*.sci");
+		loadDialog.setFile("*.scn");
 		loadDialog.setVisible(true);
 		String filepath = loadDialog.getDirectory() + loadDialog.getFile();
-		if (filepath == null || !filepath.endsWith(".sci") ||
+		if (filepath == null || !filepath.endsWith(".scn") ||
 						filepath.length() <= 4) {
 			// do nothing
 		} else {
