@@ -5,6 +5,7 @@ import java.awt.FileDialog;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStreamReader;
