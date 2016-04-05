@@ -2,7 +2,7 @@ package matrixLib;
 
 public class Matrix {
 	
-	private float[][] matrix;
+	protected float[][] matrix;
 
 	public Matrix(int rows, int cols) {
 		this.matrix = new float[rows][cols];
