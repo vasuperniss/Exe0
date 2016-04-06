@@ -1,4 +1,4 @@
-package matrixLib;
+package model.matrixLib;
 
 public class Matrix2DFactory {
 

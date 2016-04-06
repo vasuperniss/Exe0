@@ -1,4 +1,4 @@
-package matrixLib;
+package model.matrixLib;
 
 public class Vector extends Matrix {
 

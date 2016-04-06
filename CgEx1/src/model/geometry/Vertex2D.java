@@ -1,7 +1,7 @@
 package model.geometry;
 
-import matrixLib.Matrix;
-import matrixLib.Vector;
+import model.matrixLib.Matrix;
+import model.matrixLib.Vector;
 
 public class Vertex2D implements I2DVertex {
 

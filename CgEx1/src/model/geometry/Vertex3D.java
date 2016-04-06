@@ -1,6 +1,6 @@
 package model.geometry;
 
-import matrixLib.Vector;
+import model.matrixLib.Vector;
 
 public class Vertex3D extends Vertex2D implements I3DVertex {
 
