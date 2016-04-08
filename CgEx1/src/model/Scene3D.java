@@ -11,11 +11,12 @@ import model.geometry3d.Edge3D;
 import model.geometry3d.Vertex3D;
 import controller.IModelController;
 
-public class Scene3D implements IModel {
+public class Scene3D implements IModel{
 
 	private IModelController controller;
 	private List<I3DVertex> vertices;
 	private List<I3DEdge> edges;
+	private Viewport viewport;
 
 	public Scene3D() {
 		this.vertices = new ArrayList<I3DVertex>();
@@ -27,7 +28,9 @@ public class Scene3D implements IModel {
 		this.controller = controller;
 	}
 	
-	public static Scene3D fromFile(BufferedReader sceneFileReader) throws NumberFormatException, IOException {
+	public static Scene3D fromFile(BufferedReader sceneFileReader,
+									BufferedReader viewportFileReader)
+									throws NumberFormatException, IOException {
 		Scene3D returned = new Scene3D();
 		// read the number of vertices
 		int numVertices = Integer.parseInt(sceneFileReader.readLine());
@@ -49,8 +52,10 @@ public class Scene3D implements IModel {
 			returned.edges.add(new Edge3D(returned.vertices.get(startId),
 												returned.vertices.get(endId)));
 		}
-
+		
+		// read viewport
+		returned.viewport = Viewport.fromFile(viewportFileReader);
+		
 		return returned;
 	}
-
 }
