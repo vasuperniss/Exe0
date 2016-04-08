@@ -1,4 +1,4 @@
-package model.geometry;
+package model.geometry2d;
 
 import model.matrixLib.Matrix;
 import model.matrixLib.Vector;

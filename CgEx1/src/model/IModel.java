@@ -4,7 +4,7 @@ import controller.IModelController;
 
 public interface IModel {
 
-	void addController(IModelController controller);
+	void setController(IModelController controller);
 	
 	
 }

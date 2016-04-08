@@ -1,4 +1,4 @@
-package model.geometry;
+package model.geometry2d;
 
 import java.awt.Graphics;
 
@@ -7,7 +7,7 @@ import java.awt.Graphics;
  * @author Michael Vassernis 319582888
  * @author Eran Haberman 201508793
  */
-public interface IEdge {
+public interface I2DEdge {
 
 	/**
 	 * Gets the start Vertex of the Edge.

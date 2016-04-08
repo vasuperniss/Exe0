@@ -1,9 +1,9 @@
-package model.drawing;
+package view.drawing;
 
 import java.awt.Graphics;
 import java.util.List;
 
-import model.geometry.IEdge;
+import model.geometry2d.I2DEdge;
 
 /**
  * The Interface IPolygonFiller.
@@ -18,5 +18,5 @@ public interface IPolygonFiller {
 	 * @param g the Graphics object to draw on
 	 * @param edges the edges
 	 */
-	public void fillDrawingUsingEdges(Graphics g, List<IEdge> edges);
+	public void fillDrawingUsingEdges(Graphics g, List<I2DEdge> edges);
 }

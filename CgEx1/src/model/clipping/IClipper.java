@@ -2,9 +2,9 @@ package model.clipping;
 
 import java.util.List;
 
-import model.geometry.IEdge;
-import model.geometry.Vertex2D;
+import model.geometry2d.I2DEdge;
+import model.geometry2d.Vertex2D;
 
 public interface IClipper {
-	List<IEdge> clipEdges(List<IEdge> edges, Vertex2D corner, float width, float height);
+	List<I2DEdge> clipEdges(List<I2DEdge> edges, Vertex2D corner, float width, float height);
 }
