@@ -7,7 +7,10 @@ public class Vector extends Matrix {
 	}
 	
 	public Vector(float[] vector) {
-		super(new float[][] {vector});
+		super(new float[vector.length][1]);
+		for (int i = 0; i < vector.length; i++) {
+			this.matrix[i][0] = vector[i];
+		}
 	}
 	
 	public float getValue(int row) {

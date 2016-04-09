@@ -36,4 +36,18 @@ public class Edge2D implements I2DEdge {
 		return this.slope;
 	}
 
+	@Override
+	public I2DVertex getVertexAtY(float y) {
+		float t = (y - this.start.getY()) / (this.end.getY() - this.start.getY());
+		float x = this.start.getX() + t * (this.end.getX() - this.start.getX());
+		return new Vertex2D(x, y);
+	}
+
+	@Override
+	public I2DVertex getVertexAtX(float x) {
+		float t = (x - this.start.getX()) / (this.end.getX() - this.start.getX());
+		float y = this.start.getY() + t * (this.end.getY() - this.start.getY());
+		return new Vertex2D(x, y);
+	}
+
 }

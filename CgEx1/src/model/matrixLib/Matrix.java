@@ -82,7 +82,7 @@ public class Matrix {
 			if (i > 0)
 				str += "\n";
 			str += "[";
-			for (int j = 0; j < this.matrix.length; j++) {
+			for (int j = 0; j < this.matrix[0].length; j++) {
 				if (j > 0)
 					str += ", ";
 				str += this.matrix[i][j];

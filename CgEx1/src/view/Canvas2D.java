@@ -46,28 +46,28 @@ public class Canvas2D extends BaseCanvesEventListener implements IView {
 				.toCharArray()[0];
 		switch (pressedKey) {
 		case 'C':
-			// Toggle Clip on/off
+			//TODO Toggle Clip on/off
 			break;
 		case 'R':
-			// Resets the view and the world to the original position
+			//TODO Resets the view and the world to the original position
 			break;
 		case 'L':
-			// Load a new scene/view file according to the user selection (the file type).
+			//TODO Load a new scene/view file according to the user selection (the file type).
 			break;
 		case 'X':
-			// Sets the X axis as the rotation axis.
+			//TODO Sets the X axis as the rotation axis.
 			break;
 		case 'Y':
-			// Sets the Y axis as the rotation axis.
+			//TODO Sets the Y axis as the rotation axis.
 			break;
 		case 'Z':
-			// Sets the Z axis as the rotation axis.
+			//TODO Sets the Z axis as the rotation axis.
 			break;
 		case 'F':
-			// Fill the polygons (toggle).
+			//TODO Fill the polygons (toggle).
 			break;
 		case 'Q':
-			// Quit.
+			//TODO Quit.
 			break;
 		default:
 			break;
@@ -82,26 +82,26 @@ public class Canvas2D extends BaseCanvesEventListener implements IView {
 		int heightThird = this.getHeight() / 3;
 		if (widthThird <= x && x <= 2 * widthThird) {
 			if (y < heightThird || y > 2 * heightThird) {
-				// scaling
+				//TODO start scaling
 			} else {
-				// translate
+				//TODO start translate
 			}
 		} else {
 			if (heightThird <= y && y <= heightThird) {
-				// scaling
+				//TODO start scaling
 			} else {
-				// rotating
+				//TODO start rotating
 			}
 		}
 	}
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
-
+		//TODO update controller
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-
+		//TODO close transformation
 	}
 }

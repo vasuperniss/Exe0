@@ -36,4 +36,8 @@ public interface I2DEdge {
 	 * @return the slope
 	 */
 	public float getSlope();
+
+	public I2DVertex getVertexAtY(float yMax);
+
+	public I2DVertex getVertexAtX(float xMin);
 }
