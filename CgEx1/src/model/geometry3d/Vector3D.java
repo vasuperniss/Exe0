@@ -20,6 +20,12 @@ public class Vector3D extends Vector {
 		this.matrix[3][0] = 1;
 	}
 	
+	public Vector3D(I3DVertex p1, I3DVertex p2) {
+		this(p2.getX() - p1.getX(),
+				p2.getY() - p1.getY(),
+				p2.getZ() - p1.getZ());
+	}
+	
 	public Vector3D crossProduct(Vector3D v) {
 		if (this.matrix.length != v.matrix.length || this.matrix.length != 4)
 			throw new RuntimeException("Vector dimentions do not match.");

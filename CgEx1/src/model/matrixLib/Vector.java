@@ -14,10 +14,10 @@ public class Vector extends Matrix {
 	}
 	
 	public float getValue(int row) {
-		return this.matrix[row][1];
+		return this.matrix[row][0];
 	}
 	
 	public void setValue(int row, float value) {
-		this.matrix[row][1] = value;
+		this.matrix[row][0] = value;
 	}
 }

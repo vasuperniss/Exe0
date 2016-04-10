@@ -44,7 +44,6 @@ public class Controller implements IModelController, IViewController {
 				// failed - do nothing
 			}
 		}
-		//TODO:: redraw
 	}
 
 	@Override
@@ -59,7 +58,6 @@ public class Controller implements IModelController, IViewController {
 
 	@Override
 	public void quit() {
-
+		System.exit(0);
 	}
-
 }

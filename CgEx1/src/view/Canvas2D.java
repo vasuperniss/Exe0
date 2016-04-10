@@ -26,7 +26,7 @@ public class Canvas2D extends BaseCanvesEventListener implements IView {
 	}
 
 	@Override
-	public void addController(IViewController controller) {
+	public void setController(IViewController controller) {
 		this.controller = controller;
 	}
 

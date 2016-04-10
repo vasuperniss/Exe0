@@ -1,5 +1,7 @@
 package model.matrixLib;
 
+import model.geometry3d.Vector3D;
+
 public class Matrix3DFactory {
 	
 	public Matrix getIdentityMatrix() {
@@ -67,5 +69,12 @@ public class Matrix3DFactory {
 	
 	public Matrix getZReflectionMatrix() {
 		return this.getScaleMatrix(1, 1, -1);
+	}
+
+	public Matrix getRotationMatrixVectors(Vector3D xv, Vector3D yv, Vector3D zv) {
+		return new Matrix(new float [][] { { xv.getValue(0), xv.getValue(1), xv.getValue(2), 0 },
+										{ yv.getValue(0), yv.getValue(1), yv.getValue(2), 0 },
+										{ zv.getValue(0), zv.getValue(1), zv.getValue(2), 0 },
+										{0, 0, 0, 1 } });
 	}
 }
