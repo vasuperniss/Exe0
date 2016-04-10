@@ -1,5 +1,7 @@
 package view;
 
+import java.awt.FileDialog;
+import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
@@ -46,30 +48,43 @@ public class Canvas2D extends BaseCanvesEventListener implements IView {
 				.toCharArray()[0];
 		switch (pressedKey) {
 		case 'C':
-			//TODO Toggle Clip on/off
+			// Toggle Clip on/off
+			this.controller.changeClippingState();
 			break;
 		case 'R':
-			//TODO Resets the view and the world to the original position
+			// Resets the view and the world to the original position
+			this.controller.resetToOriginalPosition();
 			break;
 		case 'L':
-			//TODO Load a new scene/view file according to the user selection (the file type).
+			// Load a new scene/view file according to the user selection (the file type).
+			FileDialog loadDialog = new FileDialog((Frame)this.getParent(),
+									"Choose a file to load from", FileDialog.LOAD);
+			loadDialog.setFile("*.scn");
+			loadDialog.setVisible(true);
+			this.controller.loadANewFile(loadDialog.getDirectory() + loadDialog.getFile());
 			break;
 		case 'X':
-			//TODO Sets the X axis as the rotation axis.
+			// Sets the X axis as the rotation axis.
+			this.controller.changeRotation(IViewController.Axis.X);
 			break;
 		case 'Y':
-			//TODO Sets the Y axis as the rotation axis.
+			// Sets the Y axis as the rotation axis.
+			this.controller.changeRotation(IViewController.Axis.Y);
 			break;
 		case 'Z':
-			//TODO Sets the Z axis as the rotation axis.
+			// Sets the Z axis as the rotation axis.
+			this.controller.changeRotation(IViewController.Axis.Z);
 			break;
 		case 'F':
-			//TODO Fill the polygons (toggle).
+			// Fill the polygons (toggle).
+			this.controller.changePolygonFillingState();
 			break;
 		case 'Q':
-			//TODO Quit.
+			// Quit.
+			this.controller.quit();
 			break;
 		default:
+			// do nothing
 			break;
 		}
 	}

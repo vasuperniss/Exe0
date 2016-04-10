@@ -32,30 +32,40 @@ public class Scene3D implements IModel{
 									BufferedReader viewportFileReader)
 									throws NumberFormatException, IOException {
 		Scene3D returned = new Scene3D();
-		// read the number of vertices
-		int numVertices = Integer.parseInt(sceneFileReader.readLine());
+		returned.setSceneFromFile(sceneFileReader);
+		returned.setViewportFromFile(viewportFileReader);
+		return returned;
+	}
+
+	@Override
+	public void setSceneFromFile(BufferedReader reader) throws IOException {
+		// delete the current state
+		this.vertices.clear();
+		this.edges.clear();
+		
+		int numVertices = Integer.parseInt(reader.readLine());
 		// read all vertices
 		for (int i = 0; i < numVertices; i++) {
-			String[] vertexStr = sceneFileReader.readLine().split(" ");
-			returned.vertices.add(new Vertex3D(Float.parseFloat(vertexStr[0]),
+			String[] vertexStr = reader.readLine().split(" ");
+			this.vertices.add(new Vertex3D(Float.parseFloat(vertexStr[0]),
 											Float.parseFloat(vertexStr[1]),
 											Float.parseFloat(vertexStr[2])));
 		}
 		
 		// read the number of edges
-		int numEdges = Integer.parseInt(sceneFileReader.readLine());
+		int numEdges = Integer.parseInt(reader.readLine());
 		// read all Edges
 		for (int i = 0; i < numEdges; i++) {
-			String[] edgeStr = sceneFileReader.readLine().split(" ");
+			String[] edgeStr = reader.readLine().split(" ");
 			int startId = Integer.parseInt(edgeStr[0]);
 			int endId = Integer.parseInt(edgeStr[1]);
-			returned.edges.add(new Edge3D(returned.vertices.get(startId),
-												returned.vertices.get(endId)));
+			this.edges.add(new Edge3D(this.vertices.get(startId),
+												this.vertices.get(endId)));
 		}
-		
-		// read viewport
-		returned.viewport = Viewport.fromFile(viewportFileReader);
-		
-		return returned;
+	}
+
+	@Override
+	public void setViewportFromFile(BufferedReader reader) throws IOException {
+		this.viewport = Viewport.fromFile(reader);
 	}
 }
