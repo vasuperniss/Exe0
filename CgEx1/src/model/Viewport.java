@@ -8,6 +8,8 @@ import model.camera.OrthographicCamera;
 import model.geometry3d.I3DVertex;
 import model.geometry3d.Vector3D;
 import model.geometry3d.Vertex3D;
+import model.matrixLib.Matrix;
+import model.matrixLib.Vector;
 
 public class Viewport {
 
@@ -58,5 +60,10 @@ public class Viewport {
 	
 	public int getHeight() {
 		return this.vHeight;
+	}
+
+	public Matrix getMatrix() {
+		// TODO Auto-generated method stub
+		return this.camera.getProjectionMatrix().multiply(this.camera.getTransformationMatrix());
 	}
 }

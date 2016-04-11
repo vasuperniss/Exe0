@@ -25,7 +25,8 @@ public class Vertex2D implements I2DVertex {
 		return this.vector.getValue(1);
 	}
 	
-	public void applyMatrix(Matrix matrix) {
-		this.vector = matrix.multiply(this.vector);
+	@Override
+	public Vertex2D applyMatrix(Matrix matrix) {
+		return new Vertex2D(matrix.multiply(this.vector));
 	}
 }

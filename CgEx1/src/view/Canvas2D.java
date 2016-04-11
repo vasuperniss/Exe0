@@ -1,11 +1,15 @@
 package view;
 
+import java.awt.Color;
 import java.awt.FileDialog;
 import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.util.List;
 
+import view.drawing.IDrawable;
 import controller.IViewController;
 
 /**
@@ -18,11 +22,15 @@ public class Canvas2D extends BaseCanvesEventListener implements IView {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
-	
+
 	private IViewController controller;
+	
+	private List<IDrawable> drawables;
 
 	public Canvas2D() {
-
+		this.addMouseListener(this);
+		this.addMouseMotionListener(this);
+		this.addKeyListener(this);
 	}
 
 	@Override
@@ -37,9 +45,23 @@ public class Canvas2D extends BaseCanvesEventListener implements IView {
 	 */
 	@Override
 	public void paint(Graphics g) {
-		// BufferedImage img = new BufferedImage(this.getWidth(),
-		// this.getHeight(), 0);
-		// img.getGraphics();
+		g.setColor(Color.BLACK);
+		if (this.drawables != null) {
+			for (IDrawable d : this.drawables)
+				d.draw(g);
+		}
+	}
+
+	@Override
+	public void draw(List<IDrawable> drawables) {
+		this.drawables = drawables;
+		this.repaint();
+	}
+
+	@Override
+	public void setSize(int width, int height) {
+		super.setSize(width, height);
+		//TODO::Tell controller
 	}
 
 	@Override
@@ -56,24 +78,26 @@ public class Canvas2D extends BaseCanvesEventListener implements IView {
 			this.controller.resetToOriginalPosition();
 			break;
 		case 'L':
-			// Load a new scene/view file according to the user selection (the file type).
-			FileDialog loadDialog = new FileDialog((Frame)this.getParent(),
-									"Choose a file to load from", FileDialog.LOAD);
+			// Load a new scene/view file according to the user selection (the
+			// file type).
+			FileDialog loadDialog = new FileDialog((Frame) this.getParent(),
+					"Choose a file to load from", FileDialog.LOAD);
 			loadDialog.setFile("*.scn");
 			loadDialog.setVisible(true);
-			this.controller.loadANewFile(loadDialog.getDirectory() + loadDialog.getFile());
+			this.controller.loadANewFile(loadDialog.getDirectory()
+					+ loadDialog.getFile());
 			break;
 		case 'X':
 			// Sets the X axis as the rotation axis.
-			this.controller.changeRotation(IViewController.Axis.X);
+			this.controller.changeRotationAxis(IViewController.Axis.X);
 			break;
 		case 'Y':
 			// Sets the Y axis as the rotation axis.
-			this.controller.changeRotation(IViewController.Axis.Y);
+			this.controller.changeRotationAxis(IViewController.Axis.Y);
 			break;
 		case 'Z':
 			// Sets the Z axis as the rotation axis.
-			this.controller.changeRotation(IViewController.Axis.Z);
+			this.controller.changeRotationAxis(IViewController.Axis.Z);
 			break;
 		case 'F':
 			// Fill the polygons (toggle).
@@ -97,26 +121,26 @@ public class Canvas2D extends BaseCanvesEventListener implements IView {
 		int heightThird = this.getHeight() / 3;
 		if (widthThird <= x && x <= 2 * widthThird) {
 			if (y < heightThird || y > 2 * heightThird) {
-				//TODO start scaling
+				// TODO start scaling
 			} else {
-				//TODO start translate
+				// TODO start translate
 			}
 		} else {
 			if (heightThird <= y && y <= heightThird) {
-				//TODO start scaling
+				// TODO start scaling
 			} else {
-				//TODO start rotating
+				// TODO start rotating
 			}
 		}
 	}
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		//TODO update controller
+		// TODO update controller
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		//TODO close transformation
+		// TODO close transformation
 	}
 }

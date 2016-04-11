@@ -1,13 +1,13 @@
 package model.geometry2d;
 
-import java.awt.Graphics;
+import view.drawing.IDrawable;
 
 /**
  * The Interface IEdge.
  * @author Michael Vassernis 319582888
  * @author Eran Haberman 201508793
  */
-public interface I2DEdge {
+public interface I2DEdge extends IDrawable {
 
 	/**
 	 * Gets the start Vertex of the Edge.
@@ -22,13 +22,6 @@ public interface I2DEdge {
 	 * @return the end Vertex
 	 */
 	public I2DVertex getEnd();
-
-	/**
-	 * Draws the Edge on g.
-	 *
-	 * @param g the Graphics object to draw on
-	 */
-	public void draw(Graphics g);
 	
 	/**
 	 * Gets the slope of the edge.

@@ -25,7 +25,6 @@ public class Main {
 		IModel model = loadScene("./scene.scn", "./viewport.viw");
 		Controller controller = new Controller(view, model);
 		view.setController(controller);
-		model.setController(controller);
 		
 		((Canvas)view).setSize(model.getViewport().getWidth() + 40,
 								model.getViewport().getHeight() + 40);

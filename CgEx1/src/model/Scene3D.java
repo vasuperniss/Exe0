@@ -5,26 +5,30 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import view.drawing.IDrawable;
 import model.geometry3d.I3DVertex;
 import model.geometry3d.Polygon3D;
 import model.geometry3d.Vertex3D;
-import controller.IModelController;
+import model.matrixLib.Matrix;
+import model.matrixLib.Matrix3DFactory;
 
 public class Scene3D implements IModel{
 
-	private IModelController controller;
 	private List<I3DVertex> vertices;
 	private List<Polygon3D> polygons;
 	private Viewport viewport;
+	
+	private Matrix3DFactory m3dFactory;
+	private Matrix modifingMatrix;
+	private Matrix tmpModifingMatrix;
 
 	public Scene3D() {
 		this.vertices = new ArrayList<I3DVertex>();
 		this.polygons = new ArrayList<Polygon3D>();
-	}
-	
-	@Override
-	public void setController(IModelController controller) {
-		this.controller = controller;
+		
+		this.m3dFactory = new Matrix3DFactory();
+		this.modifingMatrix = this.m3dFactory.getIdentityMatrix();
+		this.tmpModifingMatrix = this.m3dFactory.getIdentityMatrix();
 	}
 	
 	public static Scene3D fromFile(BufferedReader sceneFileReader,
@@ -72,5 +76,22 @@ public class Scene3D implements IModel{
 	@Override
 	public Viewport getViewport() {
 		return this.viewport;
+	}
+
+	@Override
+	public void reset() {
+		this.modifingMatrix = this.m3dFactory.getIdentityMatrix();
+		this.tmpModifingMatrix = this.m3dFactory.getIdentityMatrix();
+	}
+
+	@Override
+	public List<IDrawable> to2DDrawing() {
+		List<IDrawable> drawables = new ArrayList<IDrawable>();
+		//List<Polygon3D> polys = new ArrayList<Polygon3D>();
+		for (Polygon3D p : this.polygons)
+			drawables.add(p.applyMatrix(this.modifingMatrix
+										.multiply(this.tmpModifingMatrix)
+										.multiply(this.viewport.getMatrix())));
+		return drawables;
 	}
 }

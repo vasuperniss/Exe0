@@ -12,9 +12,11 @@ public class Polygon2D {
 			throw new RuntimeException("Not enought vertices.");
 		
 		this.edges = new ArrayList<I2DEdge>();
-		for (int i = 0; i < vertices.size() - 1; i++) {
+		int i;
+		for (i = 0; i < vertices.size() - 1; i++) {
 			this.edges.add(new Edge2D(vertices.get(i), vertices.get(i + 1)));
 		}
+		this.edges.add(new Edge2D(vertices.get(i), vertices.get(0)));
 	}
 	
 	public List<I2DEdge> getEdges() {

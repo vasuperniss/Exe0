@@ -10,7 +10,7 @@ public interface IViewController {
 
 	void loadANewFile(String file);
 
-	void changeRotation(Axis x);
+	void changeRotationAxis(Axis x);
 
 	void changePolygonFillingState();
 

@@ -1,5 +1,7 @@
 package model.geometry3d;
 
+import java.awt.Graphics;
+
 public class Edge3D implements I3DEdge {
 
 	private I3DVertex start;
@@ -18,6 +20,12 @@ public class Edge3D implements I3DEdge {
 	@Override
 	public I3DVertex getEnd() {
 		return this.end;
+	}
+
+	@Override
+	public void draw(Graphics g) {
+		g.drawLine((int)this.start.getX(), (int)this.start.getY(),
+				(int)this.end.getX(), (int)this.end.getY());
 	}
 
 }

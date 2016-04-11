@@ -1,8 +1,10 @@
 package view;
 
 import java.awt.Canvas;
+import java.awt.Color;
 import java.awt.Frame;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 
 import presenter.IPresenterView;
 
@@ -18,6 +20,8 @@ public class Canvas2D extends Canvas implements IView {
 	
 	/** The presenter. */
 	private IPresenterView presenter;
+
+	private BufferedImage canvas;
 	
 	/**
 	 * Instantiates a new canvas2d.
@@ -33,7 +37,10 @@ public class Canvas2D extends Canvas implements IView {
 	 */
 	@Override
 	public void paint(Graphics g) {
-		this.presenter.drawOn(g);
+		if (this.canvas != null) {
+			g.drawImage(this.canvas, 0, 0, this.canvas.getWidth(),
+					this.canvas.getHeight(), null);
+		}
 	}
 
 	/* (non-Javadoc)
@@ -41,7 +48,21 @@ public class Canvas2D extends Canvas implements IView {
 	 */
 	@Override
 	public void reDraw() {
+		if (canvas != null) {
+			Graphics gBuffer = canvas.createGraphics();
+			gBuffer.setColor(Color.WHITE);
+			gBuffer.fillRect(0, 0, this.canvas.getWidth(),
+					this.canvas.getHeight());
+			this.presenter.drawOn(gBuffer);
+		}
 		this.repaint();
+	}
+	
+	@Override
+	public void setSize(int width, int height) {
+		super.setSize(width, height);
+		this.canvas = new BufferedImage(width, height,
+				BufferedImage.TYPE_INT_RGB);
 	}
 
 	@Override

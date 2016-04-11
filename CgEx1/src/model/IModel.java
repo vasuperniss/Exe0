@@ -2,16 +2,19 @@ package model;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.List;
 
-import controller.IModelController;
+import view.drawing.IDrawable;
 
 public interface IModel {
-
-	void setController(IModelController controller);
 
 	void setSceneFromFile(BufferedReader reader) throws IOException;
 
 	void setViewportFromFile(BufferedReader reader) throws IOException;
 
 	Viewport getViewport();
+
+	void reset();
+	
+	List<IDrawable> to2DDrawing();
 }

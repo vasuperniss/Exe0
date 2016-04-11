@@ -1,6 +1,8 @@
 package model.geometry3d;
 
-public interface I3DEdge {
+import view.drawing.IDrawable;
+
+public interface I3DEdge extends IDrawable {
 
 	/**
 	 * Gets the start Vertex of the Edge.
