@@ -5,9 +5,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.geometry3d.I3DEdge;
 import model.geometry3d.I3DVertex;
-import model.geometry3d.Edge3D;
+import model.geometry3d.Polygon3D;
 import model.geometry3d.Vertex3D;
 import controller.IModelController;
 
@@ -15,12 +14,12 @@ public class Scene3D implements IModel{
 
 	private IModelController controller;
 	private List<I3DVertex> vertices;
-	private List<I3DEdge> edges;
+	private List<Polygon3D> polygons;
 	private Viewport viewport;
 
 	public Scene3D() {
 		this.vertices = new ArrayList<I3DVertex>();
-		this.edges = new ArrayList<I3DEdge>();
+		this.polygons = new ArrayList<Polygon3D>();
 	}
 	
 	@Override
@@ -41,7 +40,7 @@ public class Scene3D implements IModel{
 	public void setSceneFromFile(BufferedReader reader) throws IOException {
 		// delete the current state
 		this.vertices.clear();
-		this.edges.clear();
+		this.polygons.clear();
 		
 		int numVertices = Integer.parseInt(reader.readLine());
 		// read all vertices
@@ -52,20 +51,26 @@ public class Scene3D implements IModel{
 											Float.parseFloat(vertexStr[2])));
 		}
 		
-		// read the number of edges
-		int numEdges = Integer.parseInt(reader.readLine());
+		// read the number of polygons
+		int numPolys = Integer.parseInt(reader.readLine());
 		// read all Edges
-		for (int i = 0; i < numEdges; i++) {
-			String[] edgeStr = reader.readLine().split(" ");
-			int startId = Integer.parseInt(edgeStr[0]);
-			int endId = Integer.parseInt(edgeStr[1]);
-			this.edges.add(new Edge3D(this.vertices.get(startId),
-												this.vertices.get(endId)));
+		for (int i = 0; i < numPolys; i++) {
+			String[] polyStr = reader.readLine().split(" ");
+			List<I3DVertex> vertices = new ArrayList<I3DVertex>();
+			for (int j = 0; j < polyStr.length; j++) {
+				vertices.add(this.vertices.get(Integer.parseInt(polyStr[j])));
+			}
+			this.polygons.add(new Polygon3D(vertices));
 		}
 	}
 
 	@Override
 	public void setViewportFromFile(BufferedReader reader) throws IOException {
 		this.viewport = Viewport.fromFile(reader);
+	}
+
+	@Override
+	public Viewport getViewport() {
+		return this.viewport;
 	}
 }

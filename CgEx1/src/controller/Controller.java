@@ -11,10 +11,12 @@ public class Controller implements IModelController, IViewController {
 
 	private IView view;
 	private IModel model;
+	private Axis rotationAxis;
 
 	public Controller(IView view, IModel model) {
 		this.view = view;
 		this.model = model;
+		this.rotationAxis = Axis.X;
 	}
 
 	@Override
@@ -47,8 +49,8 @@ public class Controller implements IModelController, IViewController {
 	}
 
 	@Override
-	public void changeRotation(Axis x) {
-
+	public void changeRotation(Axis axis) {
+		this.rotationAxis = axis;
 	}
 
 	@Override

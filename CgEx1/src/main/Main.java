@@ -27,6 +27,8 @@ public class Main {
 		view.setController(controller);
 		model.setController(controller);
 		
+		((Canvas)view).setSize(model.getViewport().getWidth() + 40,
+								model.getViewport().getHeight() + 40);
 		window.add((Canvas)view);
 		
 		window.pack();

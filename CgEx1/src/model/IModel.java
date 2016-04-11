@@ -12,4 +12,6 @@ public interface IModel {
 	void setSceneFromFile(BufferedReader reader) throws IOException;
 
 	void setViewportFromFile(BufferedReader reader) throws IOException;
+
+	Viewport getViewport();
 }
