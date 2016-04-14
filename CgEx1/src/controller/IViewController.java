@@ -1,8 +1,8 @@
 package controller;
 
+import model.matrixLib.Matrix3DFactory;
+
 public interface IViewController {
-	
-	enum Axis { X, Y, Z }
 	
 	void changeClippingState();
 
@@ -10,10 +10,20 @@ public interface IViewController {
 
 	void loadANewFile(String file);
 
-	void changeRotationAxis(Axis x);
+	void changeRotationAxis(Matrix3DFactory.Axis axis);
 
 	void changePolygonFillingState();
 
 	void quit();
+
+	void setTmpScale(float f);
+
+	void endModifing();
+
+	void setTmpTransform(int diffX, int diffY);
+
+	void setTmpRotation(float deg);
+
+	void sizeChanged(int width, int height);
 
 }

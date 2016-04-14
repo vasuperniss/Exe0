@@ -2,7 +2,9 @@ package model.geometry3d;
 
 import java.awt.Graphics;
 
-public class Edge3D implements I3DEdge {
+import view.drawing.BaseDrawable;
+
+public class Edge3D extends BaseDrawable implements I3DEdge {
 
 	private I3DVertex start;
 	private I3DVertex end;
@@ -24,6 +26,7 @@ public class Edge3D implements I3DEdge {
 
 	@Override
 	public void draw(Graphics g) {
+		super.draw(g);
 		g.drawLine((int)this.start.getX(), (int)this.start.getY(),
 				(int)this.end.getX(), (int)this.end.getY());
 	}

@@ -2,7 +2,10 @@ package model.geometry2d;
 
 import java.awt.Graphics;
 
-public class Edge2D implements I2DEdge {
+import view.drawing.BaseDrawable;
+import model.geometry3d.I3DEdge;
+
+public class Edge2D extends BaseDrawable implements I2DEdge {
 
 	private I2DVertex start;
 	private I2DVertex end;
@@ -13,6 +16,15 @@ public class Edge2D implements I2DEdge {
 		this.end = end;
 		this.slope =  (this.end.getY() - this.start.getY())
 				/ (this.end.getX() - this.start.getX());
+	}
+	
+	public Edge2D(float x1, float y1, float x2, float y2) {
+		this(new Vertex2D(x1, y1), new Vertex2D(x2, y2));
+	}
+	
+	public Edge2D(I3DEdge edge) {
+		this(edge.getStart(), edge.getEnd());
+		this.setColor(edge.getColor());
 	}
 	
 	@Override
@@ -27,6 +39,7 @@ public class Edge2D implements I2DEdge {
 
 	@Override
 	public void draw(Graphics g) {
+		super.draw(g);
 		g.drawLine((int)this.start.getX(), (int)this.start.getY(),
 				(int)this.end.getX(), (int)this.end.getY());
 	}

@@ -6,9 +6,9 @@ import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
 import java.util.List;
 
+import model.matrixLib.Matrix3DFactory;
 import view.drawing.IDrawable;
 import controller.IViewController;
 
@@ -26,6 +26,10 @@ public class Canvas2D extends BaseCanvesEventListener implements IView {
 	private IViewController controller;
 	
 	private List<IDrawable> drawables;
+
+	private State state = State.None;
+	private int startX;
+	private int startY;
 
 	public Canvas2D() {
 		this.addMouseListener(this);
@@ -61,7 +65,7 @@ public class Canvas2D extends BaseCanvesEventListener implements IView {
 	@Override
 	public void setSize(int width, int height) {
 		super.setSize(width, height);
-		//TODO::Tell controller
+		this.controller.sizeChanged(width, height);
 	}
 
 	@Override
@@ -89,15 +93,15 @@ public class Canvas2D extends BaseCanvesEventListener implements IView {
 			break;
 		case 'X':
 			// Sets the X axis as the rotation axis.
-			this.controller.changeRotationAxis(IViewController.Axis.X);
+			this.controller.changeRotationAxis(Matrix3DFactory.Axis.X);
 			break;
 		case 'Y':
 			// Sets the Y axis as the rotation axis.
-			this.controller.changeRotationAxis(IViewController.Axis.Y);
+			this.controller.changeRotationAxis(Matrix3DFactory.Axis.Y);
 			break;
 		case 'Z':
 			// Sets the Z axis as the rotation axis.
-			this.controller.changeRotationAxis(IViewController.Axis.Z);
+			this.controller.changeRotationAxis(Matrix3DFactory.Axis.Z);
 			break;
 		case 'F':
 			// Fill the polygons (toggle).
@@ -113,34 +117,80 @@ public class Canvas2D extends BaseCanvesEventListener implements IView {
 		}
 	}
 
+	enum State {
+		Transforming, Rotating, Scaling, None
+	}
+	
 	@Override
 	public void mousePressed(MouseEvent e) {
-		int x = e.getX();
-		int y = e.getY();
+		this.startX = e.getX();
+		this.startY = this.getHeight() - e.getY();
 		int widthThird = this.getWidth() / 3;
 		int heightThird = this.getHeight() / 3;
-		if (widthThird <= x && x <= 2 * widthThird) {
-			if (y < heightThird || y > 2 * heightThird) {
-				// TODO start scaling
+		if (widthThird <= this.startX && this.startX <= 2 * widthThird) {
+			if (this.startY < heightThird || this.startY > 2 * heightThird) {
+				this.state = State.Scaling;
 			} else {
-				// TODO start translate
+				this.state = State.Transforming;
 			}
 		} else {
-			if (heightThird <= y && y <= heightThird) {
-				// TODO start scaling
+			if (heightThird <= this.startY && this.startY <= 2 * heightThird) {
+				this.state = State.Scaling;
 			} else {
-				// TODO start rotating
+				this.state = State.Rotating;
 			}
 		}
 	}
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		// TODO update controller
+		int draggedX = e.getX();
+		int draggedY = this.getHeight() - e.getY();
+		int diffX = draggedX - this.startX;
+		int diffY = draggedY - this.startY;
+		switch (this.state) {
+		case Rotating:
+			float startR = this.rotation(this.startX, this.startY, this.getWidth() / 2, this.getHeight() / 2);
+			float currR = this.rotation(draggedX, draggedY, this.getWidth() / 2, this.getHeight() / 2);
+			this.controller.setTmpRotation(-(currR - startR));
+			break;
+		case Transforming:
+			this.controller.setTmpTransform(diffX, diffY);
+			break;
+		case Scaling:
+			float startD = this.distance(this.startX, this.startY, this.getWidth() / 2, this.getHeight() / 2);
+			float currD = this.distance(draggedX, draggedY, this.getWidth() / 2, this.getHeight() / 2);
+			this.controller.setTmpScale(currD / startD);
+			break;
+		default:
+			// do nothing
+			break;
+		}
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO close transformation
+		this.state = State.None;
+		this.controller.endModifing();
+	}
+	
+	private float distance(float x1, float y1, float x2, float y2) {
+		return (float)Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
+	}
+	
+	private float rotation(float x1, float y1, float x2, float y2) {
+		float xDiff = x1 - x2;
+		float yDiff = y1 - y2;
+		float d = this.distance(x1, y1, x2, y2);
+		if (d == 0) 
+			return 0;
+		float deg = (float)Math.toDegrees(Math.acos(Math.abs(xDiff / d)));
+		if (xDiff < 0 && yDiff > 0)
+			deg = 180 - deg;
+		else if (xDiff < 0 && yDiff < 0)
+			deg += 180;
+		else if (xDiff > 0 && yDiff < 0)
+			deg = 270 - deg;
+		return deg;
 	}
 }

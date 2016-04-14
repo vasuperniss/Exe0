@@ -5,20 +5,22 @@ import java.io.IOException;
 
 import model.camera.Camera;
 import model.camera.OrthographicCamera;
+import model.camera.PerspectiveCamera;
 import model.geometry3d.I3DVertex;
 import model.geometry3d.Vector3D;
 import model.geometry3d.Vertex3D;
 import model.matrixLib.Matrix;
-import model.matrixLib.Vector;
+import model.matrixLib.Matrix3DFactory;
 
 public class Viewport {
 
 	private Camera camera;
 	private int vWidth, vHeight;
 	private float left, right, top, bottom;
+	private Matrix3DFactory m3dFactory;
 	
 	private Viewport() {
-		
+		this.m3dFactory = new Matrix3DFactory();
 	}
 	
 	public static Viewport fromFile(BufferedReader viewportFileReader) throws IOException {
@@ -50,7 +52,7 @@ public class Viewport {
 				returned.vHeight = Integer.parseInt(args[2]);
 			}
 		}
-		returned.camera = new OrthographicCamera(position, lookAt, up);
+		returned.camera = new PerspectiveCamera(position, lookAt, up);
 		return returned;
 	}
 	
@@ -62,8 +64,37 @@ public class Viewport {
 		return this.vHeight;
 	}
 
-	public Matrix getMatrix() {
-		// TODO Auto-generated method stub
-		return this.camera.getProjectionMatrix().multiply(this.camera.getTransformationMatrix());
+	public Matrix getCameraWorldMatrix() {
+		return this.camera.getTransformationMatrix();
+	}
+
+	public Matrix applyBasedOnLookAtOrigin(Matrix m) {
+		return this.camera.getLookAtMatrixR().multiply(m).multiply(this.camera.getLookAtMatrix());
+	}
+	
+	public Matrix getViewportMatrix() {
+		return this.m3dFactory.getTransformationMatrix(20, 20, 0).multiply(
+				this.m3dFactory.getScaleMatrix(this.vWidth / (this.right - this.left),
+				this.vHeight / (this.top - this.bottom), 1))
+				.multiply(
+				this.m3dFactory.getTransformationMatrix(-this.left, -this.bottom, 0))
+				.multiply(this.m3dFactory.getScaleMatrix(1, -1, 1));
+	}
+	
+	public Matrix getProjectionMatrix() {
+		return this.camera.getProjectionMatrix();
+	}
+
+	public float getWindowWidth() {
+		return this.right - this.left;
+	}
+	
+	public float getWindowHeight() {
+		return this.top - this.bottom;
+	}
+
+	public void setSize(int width, int height) {
+		this.vWidth = width - 40;
+		this.vHeight = height - 40;
 	}
 }

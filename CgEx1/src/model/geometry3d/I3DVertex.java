@@ -7,4 +7,5 @@ public interface I3DVertex extends I2DVertex {
 
 	public float getZ();
 	public Vertex3D applyMatrix(Matrix matrix);
+	public float getDistanceFrom(I3DVertex lookAt);
 }

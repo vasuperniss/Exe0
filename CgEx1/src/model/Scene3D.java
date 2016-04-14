@@ -1,11 +1,15 @@
 package model;
 
+import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import view.drawing.IDrawable;
+import view.drawing.IPolygonFiller;
+import view.drawing.ScanConversionFiller;
 import model.geometry3d.I3DVertex;
 import model.geometry3d.Polygon3D;
 import model.geometry3d.Vertex3D;
@@ -21,6 +25,9 @@ public class Scene3D implements IModel{
 	private Matrix3DFactory m3dFactory;
 	private Matrix modifingMatrix;
 	private Matrix tmpModifingMatrix;
+	private boolean isFilled;
+	private IPolygonFiller filler;
+	private Random r;
 
 	public Scene3D() {
 		this.vertices = new ArrayList<I3DVertex>();
@@ -29,6 +36,9 @@ public class Scene3D implements IModel{
 		this.m3dFactory = new Matrix3DFactory();
 		this.modifingMatrix = this.m3dFactory.getIdentityMatrix();
 		this.tmpModifingMatrix = this.m3dFactory.getIdentityMatrix();
+		this.filler = new ScanConversionFiller();
+		this.isFilled = false;
+		this.r = new Random();
 	}
 	
 	public static Scene3D fromFile(BufferedReader sceneFileReader,
@@ -64,8 +74,16 @@ public class Scene3D implements IModel{
 			for (int j = 0; j < polyStr.length; j++) {
 				vertices.add(this.vertices.get(Integer.parseInt(polyStr[j])));
 			}
-			this.polygons.add(new Polygon3D(vertices));
+			Polygon3D p = new Polygon3D(vertices);
+			p.setColor(this.randomColor());
+			this.polygons.add(p);
 		}
+	}
+
+	private Color randomColor() {
+		return new Color(this.r.nextInt(256)
+						,this.r.nextInt(256)
+						,this.r.nextInt(256));
 	}
 
 	@Override
@@ -87,11 +105,54 @@ public class Scene3D implements IModel{
 	@Override
 	public List<IDrawable> to2DDrawing() {
 		List<IDrawable> drawables = new ArrayList<IDrawable>();
-		//List<Polygon3D> polys = new ArrayList<Polygon3D>();
-		for (Polygon3D p : this.polygons)
-			drawables.add(p.applyMatrix(this.modifingMatrix
-										.multiply(this.tmpModifingMatrix)
-										.multiply(this.viewport.getMatrix())));
+		Matrix full = this.viewport.getViewportMatrix()
+				.multiply(this.viewport.getProjectionMatrix())
+				.multiply(this.tmpModifingMatrix)
+				.multiply(this.modifingMatrix)
+				.multiply(this.viewport.getCameraWorldMatrix());
+		for (Polygon3D p : this.polygons) {
+			Polygon3D newP = p.applyMatrix(full);
+			newP.setColor(p.getColor());
+			drawables.add(newP);
+			if (this.isFilled) {
+				drawables.addAll(this.filler.fillDrawingUsing3DEdgesZeroZ(newP.getEdges(), newP.getColor()));
+			}
+		}
 		return drawables;
+	}
+
+	@Override
+	public void setTmpTransform(int diffX, int diffY) {
+		float xDiff = diffX * (this.viewport.getWindowWidth() / this.viewport.getWidth());
+		float yDiff = diffY * (this.viewport.getWindowHeight() / this.viewport.getHeight());
+		this.tmpModifingMatrix = m3dFactory.getTransformationMatrix(xDiff, yDiff, 0);
+	}
+
+	@Override
+	public void setTmpScale(float scale) {
+		this.tmpModifingMatrix = this.viewport.applyBasedOnLookAtOrigin(
+				m3dFactory.getScaleMatrix(scale));
+	}
+
+	@Override
+	public void setTmpRotation(float deg, Matrix3DFactory.Axis axis) {
+		this.tmpModifingMatrix = this.viewport.applyBasedOnLookAtOrigin(
+				m3dFactory.getRotationMatrixDeg(deg, axis));
+	}
+
+	@Override
+	public void addModifications() {
+		this.modifingMatrix = this.tmpModifingMatrix.multiply(this.modifingMatrix);
+		this.tmpModifingMatrix = m3dFactory.getIdentityMatrix();
+	}
+
+	@Override
+	public void setFilled(boolean isFilled) {
+		this.isFilled = isFilled;
+	}
+
+	@Override
+	public void setViewportSize(int width, int height) {
+		this.viewport.setSize(width, height);
 	}
 }

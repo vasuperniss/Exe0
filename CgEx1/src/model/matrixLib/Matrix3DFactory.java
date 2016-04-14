@@ -18,7 +18,7 @@ public class Matrix3DFactory {
 											{ 0, 0, 0, 1 } });
 	}
 	
-	enum Axis {
+	public enum Axis {
 		X, Y, Z
 	}
 	

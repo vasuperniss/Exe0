@@ -10,10 +10,11 @@ public class OrthographicCamera implements Camera {
 	private I3DVertex position;
 	private I3DVertex lookAt;
 	private Vector3D up;
+	private float distance;
 	
 	private Matrix3DFactory mFactory;
 	private Matrix transformation;
-	private Matrix projection;
+	protected Matrix projection;
 	
 	public OrthographicCamera(I3DVertex pos, I3DVertex lookAt, Vector3D up) {
 		this.position = pos;
@@ -43,6 +44,8 @@ public class OrthographicCamera implements Camera {
 		Matrix R = this.mFactory.getRotationMatrixVectors(Xv, Yv, Zv);
 		
 		this.transformation = R.multiply(T);
+		
+		this.distance = this.position.getDistanceFrom(this.lookAt);
 	}
 
 	@Override
@@ -68,5 +71,23 @@ public class OrthographicCamera implements Camera {
 	@Override
 	public Matrix getProjectionMatrix() {
 		return this.projection;
+	}
+	
+	@Override
+	public Matrix getLookAtMatrix() {
+		Matrix T = this.mFactory.getTransformationMatrix(
+				0,
+				0,
+				this.distance);
+		return T;
+	}
+	
+	@Override
+	public Matrix getLookAtMatrixR() {
+		Matrix T = this.mFactory.getTransformationMatrix(
+				0,
+				0,
+				- this.distance);
+		return T;
 	}
 }

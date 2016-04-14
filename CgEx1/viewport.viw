@@ -1,5 +1,5 @@
-_Position_ 20 0 0
-_LookAt_ 0 0 0
+_Position_ 12 104 202
+_LookAt_ 12 102 202
 _Up_ 0 0 1
-_Window_ -5 5 -5 5
-_Viewport_ 500 500
+_Window_ -3 3 -3 3
+_Viewport_ 600 600

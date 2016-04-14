@@ -17,4 +17,8 @@ public interface Camera {
 	Matrix getTransformationMatrix();
 	
 	Matrix getProjectionMatrix();
+	
+	Matrix getLookAtMatrix();
+	
+	Matrix getLookAtMatrixR();
 }

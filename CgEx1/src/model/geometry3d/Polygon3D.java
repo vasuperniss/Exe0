@@ -1,13 +1,14 @@
 package model.geometry3d;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 
 import model.matrixLib.Matrix;
-import view.drawing.IDrawable;
+import view.drawing.BaseDrawable;
 
-public class Polygon3D implements IDrawable {
+public class Polygon3D extends BaseDrawable {
 
 	private List<I3DEdge> edges;
 	private List<I3DVertex> vertices;
@@ -18,9 +19,11 @@ public class Polygon3D implements IDrawable {
 		
 		this.vertices = vertices;
 		this.edges = new ArrayList<I3DEdge>();
-		for (int i = 0; i < vertices.size() - 1; i++) {
+		int i;
+		for (i = 0; i < vertices.size() - 1; i++) {
 			this.edges.add(new Edge3D(vertices.get(i), vertices.get(i + 1)));
 		}
+		this.edges.add(new Edge3D(vertices.get(i), vertices.get(0)));
 	}
 	
 	public List<I3DEdge> getEdges() {
@@ -36,7 +39,15 @@ public class Polygon3D implements IDrawable {
 	
 	@Override
 	public void draw(Graphics g) {
+		super.draw(g);
 		for (I3DEdge e : this.edges)
 			e.draw(g);
+	}
+	
+	@Override
+	public void setColor(Color c) {
+		super.setColor(c);
+		for (I3DEdge e : this.edges)
+			e.setColor(c);
 	}
 }

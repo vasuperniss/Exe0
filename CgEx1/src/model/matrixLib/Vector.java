@@ -20,4 +20,10 @@ public class Vector extends Matrix {
 	public void setValue(int row, float value) {
 		this.matrix[row][0] = value;
 	}
+
+	public void normalizeByLastDim() {
+		for (int i = 0; i < this.matrix.length - 1; i++) {
+			this.matrix[i][0] /= this.matrix[this.matrix.length - 1][0];
+		}
+	}
 }
