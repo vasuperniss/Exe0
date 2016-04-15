@@ -22,7 +22,7 @@ public class CloseableFrame extends Frame {
 				System.exit(0);
 			}
 		};
-		
+		this.setMinimumSize(new Dimension(50, 50));
 		this.addWindowListener(myWindowAdapter);
 	}
 }

@@ -1,6 +1,7 @@
 package main;
 
 import java.awt.Canvas;
+import java.awt.Dimension;
 import java.awt.Frame;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -41,6 +42,7 @@ public class Main {
 		window.add((Canvas)view);
 		window.pack();
 		window.setVisible(true);
+		window.setMinimumSize(new Dimension(60, 60));
 	}
 
 	/**

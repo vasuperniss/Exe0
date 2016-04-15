@@ -274,6 +274,18 @@ public class Scene3D implements IModel{
 	@Override
 	public void setViewportSize(int width, int height) {
 		this.viewport.setSize(width, height);
+		this.clipper = new CohenSutherlandClipper(20, 20,
+							this.viewport.getWidth() + 20,
+							this.viewport.getHeight() + 20);
+		// create the clipping polygon (for display perpeses only)
+		List<I3DVertex> clippingCorners = new ArrayList<I3DVertex>();
+		clippingCorners.add(new Vertex3D(20, 20, 0));
+		clippingCorners.add(new Vertex3D(this.viewport.getWidth() + 20, 20, 0));
+		clippingCorners.add(new Vertex3D(this.viewport.getWidth() + 20,
+											this.viewport.getHeight() + 20, 0));
+		clippingCorners.add(new Vertex3D(20, this.viewport.getHeight() + 20, 0));
+		this.clippingPoly = new Polygon3D(clippingCorners);
+		this.clippingPoly.setColor(Color.BLACK);
 	}
 
 	/* (non-Javadoc)
