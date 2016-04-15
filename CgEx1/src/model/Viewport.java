@@ -5,7 +5,6 @@ import java.io.IOException;
 
 import model.camera.Camera;
 import model.camera.OrthographicCamera;
-import model.camera.PerspectiveCamera;
 import model.geometry3d.I3DVertex;
 import model.geometry3d.Vector3D;
 import model.geometry3d.Vertex3D;
@@ -52,7 +51,7 @@ public class Viewport {
 				returned.vHeight = Integer.parseInt(args[2]);
 			}
 		}
-		returned.camera = new PerspectiveCamera(position, lookAt, up);
+		returned.camera = new OrthographicCamera(position, lookAt, up);
 		return returned;
 	}
 	

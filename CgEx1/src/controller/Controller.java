@@ -59,6 +59,7 @@ public class Controller implements IViewController {
 				throw new RuntimeException("failed to read the file given.");
 			}
 		}
+		this.redraw();
 	}
 
 	@Override
@@ -109,5 +110,6 @@ public class Controller implements IViewController {
 	@Override
 	public void sizeChanged(int width, int height) {
 		this.model.setViewportSize(width, height);
+		this.redraw();
 	}
 }

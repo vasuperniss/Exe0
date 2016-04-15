@@ -1,12 +1,15 @@
 package view;
 
 import java.awt.Color;
-import java.awt.FileDialog;
-import java.awt.Frame;
 import java.awt.Graphics;
+import java.awt.event.ComponentEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.nio.file.Paths;
 import java.util.List;
+
+import javax.swing.JFileChooser;
 
 import model.matrixLib.Matrix3DFactory;
 import view.drawing.IDrawable;
@@ -35,6 +38,7 @@ public class Canvas2D extends BaseCanvesEventListener implements IView {
 		this.addMouseListener(this);
 		this.addMouseMotionListener(this);
 		this.addKeyListener(this);
+		this.addComponentListener(this);
 	}
 
 	@Override
@@ -84,12 +88,11 @@ public class Canvas2D extends BaseCanvesEventListener implements IView {
 		case 'L':
 			// Load a new scene/view file according to the user selection (the
 			// file type).
-			FileDialog loadDialog = new FileDialog((Frame) this.getParent(),
-					"Choose a file to load from", FileDialog.LOAD);
-			loadDialog.setFile("*.scn");
-			loadDialog.setVisible(true);
-			this.controller.loadANewFile(loadDialog.getDirectory()
-					+ loadDialog.getFile());
+			JFileChooser fileChooser = new JFileChooser(Paths.get("").toAbsolutePath().toString());
+		    if (fileChooser.showOpenDialog(this.getParent()) == JFileChooser.APPROVE_OPTION) {
+		        File selectedFile = fileChooser.getSelectedFile();
+				this.controller.loadANewFile(selectedFile.getAbsolutePath());
+		    }
 			break;
 		case 'X':
 			// Sets the X axis as the rotation axis.
@@ -190,7 +193,12 @@ public class Canvas2D extends BaseCanvesEventListener implements IView {
 		else if (xDiff < 0 && yDiff < 0)
 			deg += 180;
 		else if (xDiff > 0 && yDiff < 0)
-			deg = 270 - deg;
+			deg = 360 - deg;
 		return deg;
+	}
+
+	@Override
+	public void componentResized(ComponentEvent e) {
+		this.setSize(e.getComponent().getWidth(), e.getComponent().getHeight());
 	}
 }

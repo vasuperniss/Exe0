@@ -33,10 +33,10 @@ public class OrthographicCamera implements Camera {
 		Vector3D Zv = new Vector3D(this.lookAt, this.position);
 		Zv.normalize();
 		
-		Vector3D Xv = this.up.crossProduct(Zv);
+		Vector3D Xv = Zv.crossProduct(this.up);
 		Xv.normalize();
 		
-		Vector3D Yv = Zv.crossProduct(Xv);
+		Vector3D Yv = Xv.crossProduct(Zv);
 		
 		Matrix T = this.mFactory.getTransformationMatrix(
 					-this.position.getX(), -this.position.getY(),

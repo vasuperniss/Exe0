@@ -37,7 +37,7 @@ public class ScanConversionFiller implements IPolygonFiller {
 		while (!E.isEmpty() || !A.isEmpty()) {
 			// from E to A list
 			for (I2DEdge e : E) {
-				if (yMin(e) <= k) {
+				if (yMin(e) < k) {
 					A.add(e);
 					toRemove.add(e);
 				}
@@ -46,7 +46,7 @@ public class ScanConversionFiller implements IPolygonFiller {
 			toRemove.clear();
 			// from A to trash
 			for (I2DEdge e : A) {
-				if (yMax(e) <= k) {
+				if (yMax(e) < k) {
 					toRemove.add(e);
 				}
 			}
@@ -69,7 +69,7 @@ public class ScanConversionFiller implements IPolygonFiller {
 			}
 			// smart increase to the k value
 			if (A.isEmpty() && !E.isEmpty()) {
-				k = yMin(E.get(0));
+				k = Math.max(yMin(E.get(0)), k + 1);
 			} else {
 				k++;
 			}
