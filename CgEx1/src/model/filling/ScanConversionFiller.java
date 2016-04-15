@@ -1,4 +1,4 @@
-package view.drawing;
+package model.filling;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -14,7 +14,6 @@ import model.geometry3d.I3DEdge;
  * The Class ScanConversionFiller.
  * 
  * @author Michael Vassernis 319582888
- * @author Eran Haberman 201508793
  */
 public class ScanConversionFiller implements IPolygonFiller {
 
@@ -77,6 +76,9 @@ public class ScanConversionFiller implements IPolygonFiller {
 		return result;
 	}
 	
+	/* (non-Javadoc)
+	 * @see model.filling.IPolygonFiller#fillDrawingUsing3DEdgesZeroZ(java.util.List, java.awt.Color)
+	 */
 	@Override
 	public List<I2DEdge> fillDrawingUsing3DEdgesZeroZ(List<I3DEdge> edges, Color c) {
 		List<I2DEdge> edges2d = new ArrayList<I2DEdge>();

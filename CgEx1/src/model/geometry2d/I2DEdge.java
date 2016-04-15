@@ -3,9 +3,8 @@ package model.geometry2d;
 import view.drawing.IDrawable;
 
 /**
- * The Interface IEdge.
+ * The Interface I2DEdge.
  * @author Michael Vassernis 319582888
- * @author Eran Haberman 201508793
  */
 public interface I2DEdge extends IDrawable {
 
@@ -30,7 +29,19 @@ public interface I2DEdge extends IDrawable {
 	 */
 	public float getSlope();
 
-	public I2DVertex getIntVertexAtY(float yMax);
+	/**
+	 * Gets the vertex at the given y.
+	 *
+	 * @param y the y position
+	 * @return the vertex at y
+	 */
+	public I2DVertex getIntVertexAtY(float y);
 
-	public I2DVertex getIntVertexAtX(float xMin);
+	/**
+	 * Gets the vertex at the given x.
+	 *
+	 * @param x the x position
+	 * @return the vertex at x
+	 */
+	public I2DVertex getIntVertexAtX(float x);
 }

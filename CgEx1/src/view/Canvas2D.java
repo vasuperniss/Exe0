@@ -19,21 +19,30 @@ import controller.IViewController;
  * The Class Canvas2D.
  * 
  * @author Michael Vassernis 319582888
- * @author Eran Haberman 201508793
  */
 public class Canvas2D extends BaseCanvesEventListener implements IView {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
+	/** The controller. */
 	private IViewController controller;
 	
+	/** The drawables. */
 	private List<IDrawable> drawables;
 
+	/** The state of the user interaction. */
 	private State state = State.None;
+	
+	/** The clicked start x position. */
 	private int startX;
+	
+	/** The clicked start y position. */
 	private int startY;
 
+	/**
+	 * Instantiates a new canvas 2d.
+	 */
 	public Canvas2D() {
 		this.addMouseListener(this);
 		this.addMouseMotionListener(this);
@@ -41,6 +50,9 @@ public class Canvas2D extends BaseCanvesEventListener implements IView {
 		this.addComponentListener(this);
 	}
 
+	/* (non-Javadoc)
+	 * @see view.IView#setController(controller.IViewController)
+	 */
 	@Override
 	public void setController(IViewController controller) {
 		this.controller = controller;
@@ -60,18 +72,27 @@ public class Canvas2D extends BaseCanvesEventListener implements IView {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see view.IView#draw(java.util.List)
+	 */
 	@Override
 	public void draw(List<IDrawable> drawables) {
 		this.drawables = drawables;
 		this.repaint();
 	}
 
+	/* (non-Javadoc)
+	 * @see java.awt.Component#setSize(int, int)
+	 */
 	@Override
 	public void setSize(int width, int height) {
 		super.setSize(width, height);
 		this.controller.sizeChanged(width, height);
 	}
 
+	/* (non-Javadoc)
+	 * @see java.awt.event.KeyListener#keyTyped(java.awt.event.KeyEvent)
+	 */
 	@Override
 	public void keyTyped(KeyEvent e) {
 		char pressedKey = String.valueOf(e.getKeyChar()).toUpperCase()
@@ -120,10 +141,23 @@ public class Canvas2D extends BaseCanvesEventListener implements IView {
 		}
 	}
 
+	/**
+	 * The Enum State.
+	 */
 	enum State {
-		Transforming, Rotating, Scaling, None
+		/** The Transforming. */
+		Transforming, 
+		 /** The Rotating. */
+		 Rotating, 
+		 /** The Scaling. */
+		 Scaling, 
+		 /** The None. */
+		 None
 	}
 	
+	/* (non-Javadoc)
+	 * @see java.awt.event.MouseListener#mousePressed(java.awt.event.MouseEvent)
+	 */
 	@Override
 	public void mousePressed(MouseEvent e) {
 		this.startX = e.getX();
@@ -132,19 +166,26 @@ public class Canvas2D extends BaseCanvesEventListener implements IView {
 		int heightThird = this.getHeight() / 3;
 		if (widthThird <= this.startX && this.startX <= 2 * widthThird) {
 			if (this.startY < heightThird || this.startY > 2 * heightThird) {
+				// scaling section clicked
 				this.state = State.Scaling;
 			} else {
+				// transforming section clicked
 				this.state = State.Transforming;
 			}
 		} else {
 			if (heightThird <= this.startY && this.startY <= 2 * heightThird) {
+				// scaling section clicked
 				this.state = State.Scaling;
 			} else {
+				// rotation section clicked
 				this.state = State.Rotating;
 			}
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see java.awt.event.MouseMotionListener#mouseDragged(java.awt.event.MouseEvent)
+	 */
 	@Override
 	public void mouseDragged(MouseEvent e) {
 		int draggedX = e.getX();
@@ -153,16 +194,25 @@ public class Canvas2D extends BaseCanvesEventListener implements IView {
 		int diffY = draggedY - this.startY;
 		switch (this.state) {
 		case Rotating:
-			float startR = this.rotation(this.startX, this.startY, this.getWidth() / 2, this.getHeight() / 2);
-			float currR = this.rotation(draggedX, draggedY, this.getWidth() / 2, this.getHeight() / 2);
+			// calculate the start and current relative degrees
+			float startR = this.rotation(this.startX, this.startY,
+												this.getWidth() / 2, this.getHeight() / 2);
+			float currR = this.rotation(draggedX, draggedY,
+												this.getWidth() / 2, this.getHeight() / 2);
+			// make a temporary rotation
 			this.controller.setTmpRotation(-(currR - startR));
 			break;
 		case Transforming:
+			// make a temporary moving
 			this.controller.setTmpTransform(diffX, diffY);
 			break;
 		case Scaling:
-			float startD = this.distance(this.startX, this.startY, this.getWidth() / 2, this.getHeight() / 2);
-			float currD = this.distance(draggedX, draggedY, this.getWidth() / 2, this.getHeight() / 2);
+			// calculate the start and current  distances from middle
+			float startD = this.distance(this.startX, this.startY,
+													this.getWidth() / 2, this.getHeight() / 2);
+			float currD = this.distance(draggedX, draggedY,
+													this.getWidth() / 2, this.getHeight() / 2);
+			// make a temporary scale
 			this.controller.setTmpScale(currD / startD);
 			break;
 		default:
@@ -171,16 +221,37 @@ public class Canvas2D extends BaseCanvesEventListener implements IView {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see java.awt.event.MouseListener#mouseReleased(java.awt.event.MouseEvent)
+	 */
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		this.state = State.None;
 		this.controller.endModifing();
 	}
 	
+	/**
+	 * Distance.
+	 *
+	 * @param x1 the x1
+	 * @param y1 the y1
+	 * @param x2 the x2
+	 * @param y2 the y2
+	 * @return the float
+	 */
 	private float distance(float x1, float y1, float x2, float y2) {
 		return (float)Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
 	}
 	
+	/**
+	 * Rotation.
+	 *
+	 * @param x1 the x1
+	 * @param y1 the y1
+	 * @param x2 the x2
+	 * @param y2 the y2
+	 * @return the float
+	 */
 	private float rotation(float x1, float y1, float x2, float y2) {
 		float xDiff = x1 - x2;
 		float yDiff = y1 - y2;
@@ -188,6 +259,7 @@ public class Canvas2D extends BaseCanvesEventListener implements IView {
 		if (d == 0) 
 			return 0;
 		float deg = (float)Math.toDegrees(Math.acos(Math.abs(xDiff / d)));
+		// fix the degree according to the section on the R^2 axis system
 		if (xDiff < 0 && yDiff > 0)
 			deg = 180 - deg;
 		else if (xDiff < 0 && yDiff < 0)
@@ -197,6 +269,9 @@ public class Canvas2D extends BaseCanvesEventListener implements IView {
 		return deg;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.awt.event.ComponentListener#componentResized(java.awt.event.ComponentEvent)
+	 */
 	@Override
 	public void componentResized(ComponentEvent e) {
 		this.setSize(e.getComponent().getWidth(), e.getComponent().getHeight());

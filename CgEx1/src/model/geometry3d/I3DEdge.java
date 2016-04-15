@@ -2,6 +2,11 @@ package model.geometry3d;
 
 import view.drawing.IDrawable;
 
+
+/**
+ * The Interface I2DEdge.
+ * @author Michael Vassernis 319582888
+ */
 public interface I3DEdge extends IDrawable {
 
 	/**
