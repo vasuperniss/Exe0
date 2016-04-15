@@ -30,4 +30,6 @@ public interface IModel {
 	void setFilled(boolean isFilled);
 
 	void setViewportSize(int width, int height);
+
+	void setClipped(boolean isClipped);
 }

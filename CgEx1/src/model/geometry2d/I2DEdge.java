@@ -30,7 +30,7 @@ public interface I2DEdge extends IDrawable {
 	 */
 	public float getSlope();
 
-	public I2DVertex getVertexAtY(float yMax);
+	public I2DVertex getIntVertexAtY(float yMax);
 
-	public I2DVertex getVertexAtX(float xMin);
+	public I2DVertex getIntVertexAtX(float xMin);
 }

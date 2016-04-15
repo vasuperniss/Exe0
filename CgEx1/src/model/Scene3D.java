@@ -10,6 +10,9 @@ import java.util.Random;
 import view.drawing.IDrawable;
 import view.drawing.IPolygonFiller;
 import view.drawing.ScanConversionFiller;
+import model.clipping.CohenSutherlandClipper;
+import model.clipping.ILineClipper;
+import model.geometry2d.Polygon2D;
 import model.geometry3d.I3DVertex;
 import model.geometry3d.Polygon3D;
 import model.geometry3d.Vertex3D;
@@ -28,6 +31,9 @@ public class Scene3D implements IModel{
 	private boolean isFilled;
 	private IPolygonFiller filler;
 	private Random r;
+	private ILineClipper clipper;
+	private boolean isClippingOn;
+	private Polygon3D clippingPoly;
 
 	public Scene3D() {
 		this.vertices = new ArrayList<I3DVertex>();
@@ -37,7 +43,9 @@ public class Scene3D implements IModel{
 		this.modifingMatrix = this.m3dFactory.getIdentityMatrix();
 		this.tmpModifingMatrix = this.m3dFactory.getIdentityMatrix();
 		this.filler = new ScanConversionFiller();
+		this.clipper = new CohenSutherlandClipper(0, 1, 0, 1);
 		this.isFilled = false;
+		this.isClippingOn = false;
 		this.r = new Random();
 	}
 	
@@ -89,6 +97,15 @@ public class Scene3D implements IModel{
 	@Override
 	public void setViewportFromFile(BufferedReader reader) throws IOException {
 		this.viewport = Viewport.fromFile(reader);
+		this.clipper = new CohenSutherlandClipper(20, 20,
+				this.viewport.getWidth() + 20, this.viewport.getHeight() + 20);
+		List<I3DVertex> clippingCorners = new ArrayList<I3DVertex>();
+		clippingCorners.add(new Vertex3D(20, 20, 0));
+		clippingCorners.add(new Vertex3D(this.viewport.getWidth() + 20, 20, 0));
+		clippingCorners.add(new Vertex3D(this.viewport.getWidth() + 20, this.viewport.getHeight() + 20, 0));
+		clippingCorners.add(new Vertex3D(20, this.viewport.getHeight() + 20, 0));
+		this.clippingPoly = new Polygon3D(clippingCorners);
+		this.clippingPoly.setColor(Color.BLACK);
 	}
 
 	@Override
@@ -105,18 +122,29 @@ public class Scene3D implements IModel{
 	@Override
 	public List<IDrawable> to2DDrawing() {
 		List<IDrawable> drawables = new ArrayList<IDrawable>();
+		if (this.isClippingOn && this.clippingPoly != null) {
+			drawables.add(clippingPoly);
+		}
 		Matrix full = this.viewport.getViewportMatrix()
 				.multiply(this.viewport.getProjectionMatrix())
 				.multiply(this.tmpModifingMatrix)
 				.multiply(this.modifingMatrix)
 				.multiply(this.viewport.getCameraWorldMatrix());
 		for (Polygon3D p : this.polygons) {
-			Polygon3D newP = p.applyMatrix(full);
+			Polygon2D newP = new Polygon2D(p.applyMatrix(full));
 			newP.setColor(p.getColor());
+			if (this.isClippingOn) {
+				newP = this.clipper.clipPolygon(newP);
+				if (newP == null)
+					continue;
+			}
 			drawables.add(newP);
 			if (this.isFilled) {
-				drawables.addAll(this.filler.fillDrawingUsing3DEdgesZeroZ(newP.getEdges(), newP.getColor()));
+				drawables.addAll(this.filler.fillDrawingUsingEdges(newP.getEdges(), newP.getColor()));
 			}
+		}
+		if (this.isClippingOn && this.clippingPoly != null) {
+			drawables.add(clippingPoly);
 		}
 		return drawables;
 	}
@@ -154,5 +182,10 @@ public class Scene3D implements IModel{
 	@Override
 	public void setViewportSize(int width, int height) {
 		this.viewport.setSize(width, height);
+	}
+
+	@Override
+	public void setClipped(boolean isClipped) {
+		this.isClippingOn = isClipped;
 	}
 }

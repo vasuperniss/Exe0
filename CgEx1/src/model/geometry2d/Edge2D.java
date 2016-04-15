@@ -50,17 +50,23 @@ public class Edge2D extends BaseDrawable implements I2DEdge {
 	}
 
 	@Override
-	public I2DVertex getVertexAtY(float y) {
+	public I2DVertex getIntVertexAtY(float y) {
 		float t = (y - this.start.getY()) / (this.end.getY() - this.start.getY());
 		float x = this.start.getX() + t * (this.end.getX() - this.start.getX());
-		return new Vertex2D(x, y);
+		return new Vertex2D((int)x, (int)y);
 	}
 
 	@Override
-	public I2DVertex getVertexAtX(float x) {
+	public I2DVertex getIntVertexAtX(float x) {
 		float t = (x - this.start.getX()) / (this.end.getX() - this.start.getX());
 		float y = this.start.getY() + t * (this.end.getY() - this.start.getY());
-		return new Vertex2D(x, y);
+		return new Vertex2D((int)x, (int)y);
+	}
+	
+	@Override
+	public String toString() {
+		return String.format("(%f,%f)->(%f,%f)", this.start.getX(), this.start.getY()
+						, this.end.getX(), this.end.getY());
 	}
 
 }

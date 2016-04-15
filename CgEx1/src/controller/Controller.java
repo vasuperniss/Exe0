@@ -32,7 +32,7 @@ public class Controller implements IViewController {
 	@Override
 	public void changeClippingState() {
 		this.isClipped = !this.isClipped;
-		//TODO:: change clipping state
+		this.model.setClipped(this.isClipped);
 		this.redraw();
 	}
 
