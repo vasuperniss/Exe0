@@ -276,4 +276,10 @@ public class Canvas2D extends BaseCanvesEventListener implements IView {
 	public void componentResized(ComponentEvent e) {
 		this.setSize(e.getComponent().getWidth(), e.getComponent().getHeight());
 	}
+
+	@Override
+	public void reSize(int width, int height) {
+		this.getParent().setSize(width, height);
+		this.setSize(width, height);
+	}
 }

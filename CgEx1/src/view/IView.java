@@ -25,4 +25,12 @@ public interface IView{
 	 * @param drawables the drawables
 	 */
 	void draw(List<IDrawable> drawables);
+
+	/**
+	 * sets the size of the View
+	 *
+	 * @param width - the new width
+	 * @param height - the new height
+	 */
+	void reSize(int width, int height);
 }

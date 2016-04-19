@@ -59,7 +59,9 @@ public class Polygon3D extends BaseDrawable {
 		List<I3DVertex> modified = new ArrayList<I3DVertex>();
 		for (I3DVertex v : this.vertices)
 			modified.add(v.applyMatrix(matrix));
-		return new Polygon3D(modified);
+		Polygon3D p = new Polygon3D(modified);
+		p.setColor(this.color);
+		return p;
 	}
 	
 	/* (non-Javadoc)
@@ -80,5 +82,17 @@ public class Polygon3D extends BaseDrawable {
 		super.setColor(c);
 		for (I3DEdge e : this.edges)
 			e.setColor(c);
+	}
+
+	public I3DVertex getCenter() {
+		float xC = 0, yC = 0, zC = 0;
+		for (I3DVertex v : this.vertices) {
+			xC += v.getX();
+			yC += v.getY();
+			zC += v.getZ();
+		}
+		return new Vertex3D(xC / this.vertices.size(),
+							yC / this.vertices.size(),
+							zC / this.vertices.size());
 	}
 }

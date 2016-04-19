@@ -139,4 +139,9 @@ public class OrthographicCamera implements Camera {
 				- this.distance);
 		return T;
 	}
+	
+	@Override
+	public I3DVertex getPosition() {
+		return position;
+	}
 }

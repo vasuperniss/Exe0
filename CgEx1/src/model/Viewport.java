@@ -175,4 +175,8 @@ public class Viewport {
 		this.vWidth = width - 40;
 		this.vHeight = height - 40;
 	}
+
+	public I3DVertex getCameraPosition() {
+		return this.camera.getPosition();
+	}
 }

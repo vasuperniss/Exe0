@@ -64,4 +64,6 @@ public interface Camera {
 	 * @return the look at matrix reversed
 	 */
 	Matrix getLookAtMatrixR();
+
+	I3DVertex getPosition();
 }

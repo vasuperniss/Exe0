@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 
@@ -192,14 +193,34 @@ public class Scene3D implements IModel{
 			drawables.add(clippingPoly);
 		}
 		// create the joined matrix of all modifications and view matrixes
-		Matrix full = this.viewport.getViewportMatrix()
-				.multiply(this.viewport.getProjectionMatrix())
-				.multiply(this.tmpModifingMatrix)
+		Matrix VP = this.viewport.getViewportMatrix()
+				.multiply(this.viewport.getProjectionMatrix());
+		Matrix TTC = this.tmpModifingMatrix
 				.multiply(this.modifingMatrix)
 				.multiply(this.viewport.getCameraWorldMatrix());
+		List<Polygon3D> transformedPolys = new ArrayList<Polygon3D>();
 		for (Polygon3D p : this.polygons) {
+			transformedPolys.add(p.applyMatrix(TTC));
+		}
+		if (this.isFilled) {
+			transformedPolys.sort(new Comparator<Polygon3D>() {
+				@Override
+				public int compare(Polygon3D o1, Polygon3D o2) {
+					I3DVertex o1Center = o1.getCenter();
+					I3DVertex o2Center = o2.getCenter();
+					float d1 = o1Center.getDistanceFrom(new Vertex3D());
+					float d2 = o2Center.getDistanceFrom(new Vertex3D());
+					if (d1 > d2) {
+						return -1;
+					} else {
+						return 1;
+					}
+				}
+			});
+		}
+		for (Polygon3D p : transformedPolys) {
 			// draw all the the polygons
-			Polygon2D newP = new Polygon2D(p.applyMatrix(full));
+			Polygon2D newP = new Polygon2D(p.applyMatrix(VP));
 			newP.setColor(p.getColor());
 			if (this.isClippingOn) {
 				newP = this.clipper.clipPolygon(newP);

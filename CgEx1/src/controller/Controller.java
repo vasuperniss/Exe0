@@ -92,6 +92,9 @@ public class Controller implements IViewController {
 							("failed to read the file given.");
 			}
 		}
+		this.model.reset();
+		this.view.reSize(this.model.getViewport().getWidth() + 40,
+							this.model.getViewport().getHeight() + 40);
 		this.redraw();
 	}
 
