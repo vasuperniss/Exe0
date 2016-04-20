@@ -27,7 +27,7 @@ public class Polygon3D extends BaseDrawable {
 	 * @param vertices the vertices
 	 */
 	public Polygon3D(List<I3DVertex> vertices) {
-		if (vertices.size() < 3)
+		if (vertices.size() < 2)
 			throw new RuntimeException("Not enought vertices.");
 		
 		this.vertices = vertices;

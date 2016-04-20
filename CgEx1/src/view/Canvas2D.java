@@ -208,10 +208,10 @@ public class Canvas2D extends BaseCanvesEventListener implements IView {
 			break;
 		case Scaling:
 			// calculate the start and current  distances from middle
-			float startD = this.distance(this.startX, this.startY,
-													this.getWidth() / 2, this.getHeight() / 2);
-			float currD = this.distance(draggedX, draggedY,
-													this.getWidth() / 2, this.getHeight() / 2);
+			float startD = Math.max(this.distance(this.startX, this.startY,
+							this.getWidth() / 2, this.getHeight() / 2), 1);
+			float currD = Math.max(this.distance(draggedX, draggedY,
+							this.getWidth() / 2, this.getHeight() / 2), 1);
 			// make a temporary scale
 			this.controller.setTmpScale(currD / startD);
 			break;

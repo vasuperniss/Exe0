@@ -31,7 +31,7 @@ public class Main {
 		// create a new Canvas (the View)
 		IView view = new Canvas2D();
 		// create a new Scene from file (the Model)
-		IModel model = loadScene("./vScene.scn", "./vViewport.viw");
+		IModel model = loadScene("./ex1.scn", "./ex1.viw");
 		// create a new Controller (the Controller)
 		Controller controller = new Controller(view, model);
 		view.setController(controller);

@@ -51,28 +51,33 @@ public class Viewport {
 		Vector3D up = null;
 		while ((line = viewportFileReader.readLine()) != null) {
 			String[] args = line.split(" ");
-			if (args[0].compareToIgnoreCase("_Position_") == 0) {
+			if (args[0].compareToIgnoreCase("_Position_") == 0
+					|| args[0].compareToIgnoreCase("Position") == 0) {
 				// read the camera position line
 				position = new Vertex3D(Float.parseFloat(args[1]),
 										Float.parseFloat(args[2]),
 										Float.parseFloat(args[3]));
-			} else if (args[0].compareToIgnoreCase("_LookAt_") == 0) {
+			} else if (args[0].compareToIgnoreCase("_LookAt_") == 0
+					|| args[0].compareToIgnoreCase("LookAt") == 0) {
 				// read the camera lookAt line
 				lookAt = new Vertex3D(Float.parseFloat(args[1]),
 										Float.parseFloat(args[2]),
 										Float.parseFloat(args[3]));
-			} else if (args[0].compareToIgnoreCase("_Up_") == 0) {
+			} else if (args[0].compareToIgnoreCase("_Up_") == 0
+					|| args[0].compareToIgnoreCase("Up") == 0) {
 				// read the camera up vector line
 				up = new Vector3D(Float.parseFloat(args[1]),
 										Float.parseFloat(args[2]),
 										Float.parseFloat(args[3]));
-			} else if (args[0].compareToIgnoreCase("_Window_") == 0) {
+			} else if (args[0].compareToIgnoreCase("_Window_") == 0
+					|| args[0].compareToIgnoreCase("Window") == 0) {
 				// read the camera window line
 				returned.left = Float.parseFloat(args[1]);
 				returned.right = Float.parseFloat(args[2]);
 				returned.bottom = Float.parseFloat(args[3]);
 				returned.top = Float.parseFloat(args[4]);
-			} else if (args[0].compareToIgnoreCase("_Viewport_") == 0) {
+			} else if (args[0].compareToIgnoreCase("_Viewport_") == 0
+					|| args[0].compareToIgnoreCase("Viewport") == 0) {
 				// read the screen viewport line
 				returned.vWidth = Integer.parseInt(args[1]);
 				returned.vHeight = Integer.parseInt(args[2]);
